@@ -691,7 +691,7 @@ namespace HeatBalFiniteDiffManager {
         for (ConstrNum = 1; ConstrNum <= TotConstructs; ++ConstrNum) {
             // Need to skip window constructions and eventually window materials
             if (Construct(ConstrNum).TypeIsWindow) continue;
-
+            if (!Construct(ConstrNum).IsUsed) continue;
             ConstructFD(ConstrNum).Name.allocate(Construct(ConstrNum).TotLayers);
             ConstructFD(ConstrNum).Thickness.allocate(Construct(ConstrNum).TotLayers);
             ConstructFD(ConstrNum).NodeNumPoint.allocate(Construct(ConstrNum).TotLayers);
@@ -1265,7 +1265,8 @@ namespace HeatBalFiniteDiffManager {
 
                 if (Construct(ThisNum).TypeIsWindow) continue;
                 if (Construct(ThisNum).TypeIsIRT) continue;
-                if (Construct(ThisNum).TypeIsAirBoundaryIRTSurface) continue;
+                if (Construct(ThisNum).TypeIsAirBoundary) continue;
+                if (!Construct(ThisNum).IsUsed) continue;
 
                 static constexpr auto Format_700(" Construction CondFD,{},{},{},{},{:.6R}\n");
                 print(outputFiles.eio,
