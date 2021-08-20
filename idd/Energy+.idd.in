@@ -1446,11 +1446,19 @@ RunPeriod,
        \key Yes
        \key No
        \default Yes
-  A8;  \field Treat Weather as Actual
+  A8,  \field Treat Weather as Actual
        \type choice
        \key Yes
        \key No
        \default No
+  A9; \field First Hour Interpolation Starting Values
+       \note When the weather data timestep is longer than the simulation timestep, weather data is interpolated. For the first hour of the
+       \note simulation, this field specifies which values from the first day of the run period to use as the interpolation starting point.
+       \note This same interpolation will be used for repeated warmup days.
+       \type choice
+       \key Hour1
+       \key Hour24
+       \default Hour24
 
 RunPeriodControl:SpecialDays,
      \min-fields 4
@@ -20928,6 +20936,10 @@ People,
 
 ComfortViewFactorAngles,
        \memo Used to specify radiant view factors for thermal comfort calculations.
+       \memo Note that the following angle factor fractions must sum up to 1.0
+       \extensible:2 - repeat last two fields, remembering to remove ; from "inner" fields.
+       \memo The number of surfaces can be expanded beyond 100, if necessary, by adding more
+       \memo groups to the end of the list.
   A1 , \field Name
        \type alpha
        \reference AllHeatTranAngFacNames
@@ -21070,10 +21082,570 @@ ComfortViewFactorAngles,
   A22, \field Surface 20 Name
        \type object-list
        \object-list AllHeatTranSurfNames
-  N20; \field Angle Factor 20
+  N20, \field Angle Factor 20
        \type real
        \minimum 0.0
        \maximum 1.0
+  A23, \field Surface 21 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N21, \field Angle Factor 21
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A24, \field Surface 22 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N22, \field Angle Factor 22
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A25, \field Surface 23 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N23, \field Angle Factor 23
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A26, \field Surface 24 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N24, \field Angle Factor 24
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A27, \field Surface 25 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N25, \field Angle Factor 25
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A28, \field Surface 26 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N26, \field Angle Factor 26
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A29, \field Surface 27 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N27, \field Angle Factor 27
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A30, \field Surface 28 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N28, \field Angle Factor 28
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A31, \field Surface 29 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N29, \field Angle Factor 29
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A32, \field Surface 30 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N30, \field Angle Factor 30
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A33, \field Surface 31 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N31, \field Angle Factor 31
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A34, \field Surface 32 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N32, \field Angle Factor 32
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A35, \field Surface 33 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N33, \field Angle Factor 33
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A36, \field Surface 34 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N34, \field Angle Factor 34
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A37, \field Surface 35 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N35, \field Angle Factor 35
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A38, \field Surface 36 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N36, \field Angle Factor 36
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A39, \field Surface 37 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N37, \field Angle Factor 37
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A40, \field Surface 38 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N38, \field Angle Factor 38
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A41, \field Surface 39 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N39, \field Angle Factor 39
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A42, \field Surface 40 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N40, \field Angle Factor 40
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A43, \field Surface 41 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N41, \field Angle Factor 41
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A44, \field Surface 42 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N42, \field Angle Factor 42
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A45, \field Surface 43 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N43, \field Angle Factor 43
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A46, \field Surface 44 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N44, \field Angle Factor 44
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A47, \field Surface 45 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N45, \field Angle Factor 45
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A48, \field Surface 46 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N46, \field Angle Factor 46
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A49, \field Surface 47 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N47, \field Angle Factor 47
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A50, \field Surface 48 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N48, \field Angle Factor 48
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A51, \field Surface 49 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N49, \field Angle Factor 49
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A52, \field Surface 50 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N50, \field Angle Factor 50
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A53, \field Surface 51 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N51, \field Angle Factor 51
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A54, \field Surface 52 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N52, \field Angle Factor 52
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A55, \field Surface 53 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N53, \field Angle Factor 53
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A56, \field Surface 54 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N54, \field Angle Factor 54
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A57, \field Surface 55 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N55, \field Angle Factor 55
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A58, \field Surface 56 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N56, \field Angle Factor 56
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A59, \field Surface 57 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N57, \field Angle Factor 57
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A60, \field Surface 58 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N58, \field Angle Factor 58
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A61, \field Surface 59 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N59, \field Angle Factor 59
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A62, \field Surface 60 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N60, \field Angle Factor 60
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A63, \field Surface 61 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N61, \field Angle Factor 61
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A64, \field Surface 62 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N62, \field Angle Factor 62
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A65, \field Surface 63 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N63, \field Angle Factor 63
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A66, \field Surface 64 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N64, \field Angle Factor 64
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A67, \field Surface 65 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N65, \field Angle Factor 65
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A68, \field Surface 66 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N66, \field Angle Factor 66
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A69, \field Surface 67 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N67, \field Angle Factor 67
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A70, \field Surface 68 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N68, \field Angle Factor 68
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A71, \field Surface 69 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N69, \field Angle Factor 69
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A72, \field Surface 70 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N70, \field Angle Factor 70
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A73, \field Surface 71 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N71, \field Angle Factor 71
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A74, \field Surface 72 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N72, \field Angle Factor 72
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A75, \field Surface 73 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N73, \field Angle Factor 73
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A76, \field Surface 74 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N74, \field Angle Factor 74
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A77, \field Surface 75 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N75, \field Angle Factor 75
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A78, \field Surface 76 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N76, \field Angle Factor 76
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A79, \field Surface 77 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N77, \field Angle Factor 77
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A80, \field Surface 78 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N78, \field Angle Factor 78
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A81, \field Surface 79 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N79, \field Angle Factor 79
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A82, \field Surface 80 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N80, \field Angle Factor 80
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A83, \field Surface 81 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N81, \field Angle Factor 81
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A84, \field Surface 82 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N82, \field Angle Factor 82
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A85, \field Surface 83 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N83, \field Angle Factor 83
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A86, \field Surface 84 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N84, \field Angle Factor 84
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A87, \field Surface 85 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N85, \field Angle Factor 85
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A88, \field Surface 86 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N86, \field Angle Factor 86
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A89, \field Surface 87 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N87, \field Angle Factor 87
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A90, \field Surface 88 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N88, \field Angle Factor 88
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A91, \field Surface 89 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N89, \field Angle Factor 89
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A92, \field Surface 90 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N90, \field Angle Factor 90
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A93, \field Surface 91 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N91, \field Angle Factor 91
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A94, \field Surface 92 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N92, \field Angle Factor 92
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A95, \field Surface 93 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N93, \field Angle Factor 93
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A96, \field Surface 94 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N94, \field Angle Factor 94
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A97, \field Surface 95 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N95, \field Angle Factor 95
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A98, \field Surface 96 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N96, \field Angle Factor 96
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A99, \field Surface 97 Name
+       \type object-list
+       \object-list AllHeatTranSurfNames
+  N97, \field Angle Factor 97
+       \type real
+       \minimum 0.0
+       \maximum 1.0
+  A100, \field Surface 98 Name
+        \type object-list
+        \object-list AllHeatTranSurfNames
+  N98,  \field Angle Factor 98
+        \type real
+        \minimum 0.0
+        \maximum 1.0
+  A101, \field Surface 99 Name
+        \type object-list
+        \object-list AllHeatTranSurfNames
+  N99,  \field Angle Factor 99
+        \type real
+        \minimum 0.0
+        \maximum 1.0
+  A102, \field Surface 100 Name
+        \type object-list
+        \object-list AllHeatTranSurfNames
+  N100; \field Angle Factor 100
+        \type real
+        \minimum 0.0
+        \maximum 1.0
 
 Lights,
    \memo Sets internal gains for lights in the zone.
@@ -24207,6 +24779,26 @@ AirflowNetwork:MultiZone:Surface:EffectiveLeakageArea,
       \minimum 0.5
       \maximum 1.0
       \note Enter the exponent used in the air mass flow equation.
+
+AirflowNetwork:MultiZone:SpecifiedFlowRate,
+      \min-fields 2
+      \memo This object is used to define specified flow through a linkage.
+ A1 , \field Name
+      \required-field
+      \type alpha
+      \reference SurfaceAirflowLeakageNames
+      \note Enter a unique name for this object.
+ N1 , \field Air Flow Value
+      \required-field
+      \type real
+      \unitsBasedOnField A2
+      \note Enter the specified flow rate.
+ A2 ; \field Air Flow Units
+      \type choice
+      \key kg/s
+      \key m3/s
+      \default kg/s
+      \note Enter the units of the air flow value.
 
 AirflowNetwork:MultiZone:Component:DetailedOpening,
       \min-fields 16
@@ -49564,14 +50156,35 @@ CoilSystem:Cooling:Water,
        \note even if there is no sensible load.
        \note If No, unit will not run if there is only a latent load.
        \note Dehumidification controls will be active if specified.
-   N1; \field Minimum Air To Water Temperature Offset
+   N1, \field Minimum Air To Water Temperature Offset
        \note Coil will turn on as required when inlet air temperature is above
        \note water temperature by amount of offset. To model a waterside
        \note economizer connect to condenser loop and increase offset as desired.
        \type real
-       \units deltaC  
+       \units deltaC
        \minimum 0.0
-       \default 0.0 
+       \default 0.0
+  A10, \field Economizer Lockout
+       \type choice
+       \key Yes
+       \key No
+       \default Yes
+       \note Yes means that the heat exchanger will be locked out (off)
+   N2, \field Minimum Water Loop Temperature For Heat Recovery
+       \note Only used for heat recovery loops.
+       \note Loop will turn off below this temperature.
+       \type real
+       \units C
+       \default 0.0
+  A11; \field Companion Coil Used For Heat Recovery
+       \note Only used for heat recovery loops.
+       \note Entering a coil name indicates a heat recovery loop is specified.
+       \note Coil listed is connected in series with this objects coil on demand side 
+       \note branch of a plant loop. A dedicated plant loop with no supply side
+       \note equipment, other than a pump, is currently required.
+       \note Only Coil:Cooling:Water coil type is currently allowed for heat recovery loops.
+       \type object-list
+       \object-list CoolingCoilsWater
 
 Coil:Cooling:DX,
        \memo New general DX cooling coil supporting on or more speeds and one or or operating  modes.
@@ -58046,8 +58659,6 @@ CoilSystem:IntegratedHeatPump:AirSource,
        \minimum> 0
        \maximum< 10
 
-
-
 Coil:Cooling:DX:SingleSpeed:ThermalStorage,
        \memo Direct expansion (DX) cooling coil and condensing unit (includes electric compressor
        \memo and condenser fan), single-speed with packaged integrated thermal storage for cooling.
@@ -60675,7 +61286,6 @@ AirLoopHVAC:UnitarySystem,
        \object-list UnitarySystemPerformaceNames
        \note Enter the name of the performance specification object used to describe the multispeed coil.
 
-       
 UnitarySystemPerformance:Multispeed,
        \memo The UnitarySystemPerformance object is used to specify the air flow ratio at each
        \memo operating speed. This object is primarily used for multispeed DX and water coils to allow
@@ -62112,14 +62722,14 @@ AirConditioner:VariableRefrigerantFlow,
        \type real
        \units C
        \default -6.0
-       \note For cooling mode operation, enter the minimum inlet outdoor air dry-bulb temperature 
+       \note For cooling mode operation, enter the minimum inlet outdoor air dry-bulb temperature
        \note for air-cooled units or minimum inlet water temperature for water-cooled units.
        \note Cooling is disabled below this temperature.
   N4 , \field Maximum Condenser Inlet Node Temperature in Cooling Mode
        \type real
        \units C
        \default 43.0
-       \note For cooling mode operation, enter the maximum inlet outdoor air dry-bulb temperature 
+       \note For cooling mode operation, enter the maximum inlet outdoor air dry-bulb temperature
        \note for air-cooled units or maximum inlet water temperature for water-cooled units.
        \note Cooling is disabled above this temperature.
   A3 , \field Cooling Capacity Ratio Modifier Function of Low Temperature Curve Name
@@ -62218,14 +62828,14 @@ AirConditioner:VariableRefrigerantFlow,
        \type real
        \units C
        \default -20.0
-       \note For heating mode operation, enter the minimum inlet outdoor air dry-bulb temperature 
+       \note For heating mode operation, enter the minimum inlet outdoor air dry-bulb temperature
        \note for air-cooled units or minimum inlet water temperature for water-cooled units.
        \note Heating is disabled below this temperature.
   N9 , \field Maximum Condenser Inlet Node Temperature in Heating Mode
        \type real
        \units C
        \default 16.0
-       \note For heating mode operation, enter the maximum inlet outdoor air dry-bulb temperature 
+       \note For heating mode operation, enter the maximum inlet outdoor air dry-bulb temperature
        \note for air-cooled units or maximum inlet water temperature for water-cooled units.
        \note Heating is disabled below this temperature.
   A13, \field Heating Capacity Ratio Modifier Function of Low Temperature Curve Name
@@ -62541,13 +63151,13 @@ AirConditioner:VariableRefrigerantFlow,
   N29, \field Minimum Condenser Inlet Node Temperature in Heat Recovery Mode
        \type real
        \units C
-       \note For heat recovery mode operation, enter the minimum inlet outdoor air dry-bulb temperature 
+       \note For heat recovery mode operation, enter the minimum inlet outdoor air dry-bulb temperature
        \note for air-cooled units or minimum inlet water temperature for water-cooled units.
        \note Heat recovery is disabled below this temperature.
   N30, \field Maximum Condenser Inlet Node Temperature in Heat Recovery Mode
        \type real
        \units C
-       \note For heat recovery mode operation, enter the maximum inlet outdoor air dry-bulb temperature 
+       \note For heat recovery mode operation, enter the maximum inlet outdoor air dry-bulb temperature
        \note for air-cooled units or maximum inlet water temperature for water-cooled units.
        \note Heat recovery is disabled above this temperature.
   A40, \field Heat Recovery Cooling Capacity Modifier Curve Name
@@ -71732,7 +72342,8 @@ HeatPump:PlantLoop:EIR:Cooling,
         \note object for this cooling object. The companion is used in
         \note sizing the heat pump as well as to allow checks for unexpected
         \note simultaneous operation of the two objects.
-        \reference PLHPHeatingNames
+        \type object-list
+        \object-list PLHPHeatingNames
    N1,  \field Load Side Reference Flow Rate
         \note This component is currently a constant-flow device, meaning it will always
         \note try to request the full design flow from the central plant manager.
@@ -71831,8 +72442,7 @@ HeatPump:PlantLoop:EIR:Heating,
         \note sizing the heat pump as well as to allow checks for unexpected
         \note simultaneous operation of the two objects.
         \type object-list
-        \object-list WWHPCoolingNames
-        \reference PLHPCoolingNames
+        \object-list PLHPCoolingNames
    N1,  \field Load Side Reference Flow Rate
         \note This component is currently a constant-flow device, meaning it will always
         \note try to request the full design flow from the central plant manager.
@@ -74850,7 +75460,8 @@ FluidCooler:TwoSpeed,
 GroundHeatExchanger:System,
         \memo Models vertical ground heat exchangers systems using the response factor approach
         \memo developed by Eskilson. Response factors are calculated using a finite line source
-        \memo model assuming uniform heat flux at the borehole wall.
+        \memo model assuming uniform heat flux at the borehole wall if UHFcalc is specified,
+        \memo or uniform borehole wall temperature if UBHWTcalc is specified.
         \extensible:1
         \min-fields 9
   A1,   \field Name
@@ -74897,308 +75508,313 @@ GroundHeatExchanger:System,
   A6,   \field GHE:Vertical:ResponseFactors Object Name
         \type object-list
         \object-list GroundHeatExchangerVerticalResponseFactorNames
-  A7,   \field GHE:Vertical:Array Object Name
+  A7,   \field g-Function Calculation Method
+        \type choice
+        \key UHFcalc
+        \key UBHWTcalc
+        \default UHFcalc
+  A8,   \field GHE:Vertical:Array Object Name
         \type object-list
         \object-list GroundHeatExchangerVerticalArrayNames
-  A8,   \field GHE:Vertical:Single Object Name 1
+  A9,   \field GHE:Vertical:Single Object Name 1
         \begin-extensible
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A9,   \field GHE:Vertical:Single Object Name 2
+  A10,  \field GHE:Vertical:Single Object Name 2
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A10,  \field GHE:Vertical:Single Object Name 3
+  A11,  \field GHE:Vertical:Single Object Name 3
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A11,  \field GHE:Vertical:Single Object Name 4
+  A12,  \field GHE:Vertical:Single Object Name 4
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A12,  \field GHE:Vertical:Single Object Name 5
+  A13,  \field GHE:Vertical:Single Object Name 5
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A13,  \field GHE:Vertical:Single Object Name 6
+  A14,  \field GHE:Vertical:Single Object Name 6
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A14,  \field GHE:Vertical:Single Object Name 7
+  A15,  \field GHE:Vertical:Single Object Name 7
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A15,  \field GHE:Vertical:Single Object Name 8
+  A16,  \field GHE:Vertical:Single Object Name 8
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A16,  \field GHE:Vertical:Single Object Name 9
+  A17,  \field GHE:Vertical:Single Object Name 9
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A17,  \field GHE:Vertical:Single Object Name 10
+  A18,  \field GHE:Vertical:Single Object Name 10
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A18,  \field GHE:Vertical:Single Object Name 11
+  A19,  \field GHE:Vertical:Single Object Name 11
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A19,  \field GHE:Vertical:Single Object Name 12
+  A20,  \field GHE:Vertical:Single Object Name 12
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A20,  \field GHE:Vertical:Single Object Name 13
+  A21,  \field GHE:Vertical:Single Object Name 13
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A21,  \field GHE:Vertical:Single Object Name 14
+  A22,  \field GHE:Vertical:Single Object Name 14
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A22,  \field GHE:Vertical:Single Object Name 15
+  A23,  \field GHE:Vertical:Single Object Name 15
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A23,  \field GHE:Vertical:Single Object Name 16
+  A24,  \field GHE:Vertical:Single Object Name 16
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A24,  \field GHE:Vertical:Single Object Name 17
+  A25,  \field GHE:Vertical:Single Object Name 17
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A25,  \field GHE:Vertical:Single Object Name 18
+  A26,  \field GHE:Vertical:Single Object Name 18
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A26,  \field GHE:Vertical:Single Object Name 19
+  A27,  \field GHE:Vertical:Single Object Name 19
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A27,  \field GHE:Vertical:Single Object Name 20
+  A28,  \field GHE:Vertical:Single Object Name 20
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A28,  \field GHE:Vertical:Single Object Name 21
+  A29,  \field GHE:Vertical:Single Object Name 21
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A29,  \field GHE:Vertical:Single Object Name 22
+  A30,  \field GHE:Vertical:Single Object Name 22
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A30,  \field GHE:Vertical:Single Object Name 23
+  A31,  \field GHE:Vertical:Single Object Name 23
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A31,  \field GHE:Vertical:Single Object Name 24
+  A32,  \field GHE:Vertical:Single Object Name 24
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A32,  \field GHE:Vertical:Single Object Name 25
+  A33,  \field GHE:Vertical:Single Object Name 25
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A33,  \field GHE:Vertical:Single Object Name 26
+  A34,  \field GHE:Vertical:Single Object Name 26
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A34,  \field GHE:Vertical:Single Object Name 27
+  A35,  \field GHE:Vertical:Single Object Name 27
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A35,  \field GHE:Vertical:Single Object Name 28
+  A36,  \field GHE:Vertical:Single Object Name 28
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A36,  \field GHE:Vertical:Single Object Name 29
+  A37,  \field GHE:Vertical:Single Object Name 29
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A37,  \field GHE:Vertical:Single Object Name 30
+  A38,  \field GHE:Vertical:Single Object Name 30
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A38,  \field GHE:Vertical:Single Object Name 31
+  A39,  \field GHE:Vertical:Single Object Name 31
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A39,  \field GHE:Vertical:Single Object Name 32
+  A40,  \field GHE:Vertical:Single Object Name 32
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A40,  \field GHE:Vertical:Single Object Name 33
+  A41,  \field GHE:Vertical:Single Object Name 33
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A41,  \field GHE:Vertical:Single Object Name 34
+  A42,  \field GHE:Vertical:Single Object Name 34
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A42,  \field GHE:Vertical:Single Object Name 35
+  A43,  \field GHE:Vertical:Single Object Name 35
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A43,  \field GHE:Vertical:Single Object Name 36
+  A44,  \field GHE:Vertical:Single Object Name 36
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A44,  \field GHE:Vertical:Single Object Name 37
+  A45,  \field GHE:Vertical:Single Object Name 37
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A45,  \field GHE:Vertical:Single Object Name 38
+  A46,  \field GHE:Vertical:Single Object Name 38
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A46,  \field GHE:Vertical:Single Object Name 39
+  A47,  \field GHE:Vertical:Single Object Name 39
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A47,  \field GHE:Vertical:Single Object Name 40
+  A48,  \field GHE:Vertical:Single Object Name 40
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A48,  \field GHE:Vertical:Single Object Name 41
+  A49,  \field GHE:Vertical:Single Object Name 41
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A49,  \field GHE:Vertical:Single Object Name 42
+  A50,  \field GHE:Vertical:Single Object Name 42
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A50,  \field GHE:Vertical:Single Object Name 43
+  A51,  \field GHE:Vertical:Single Object Name 43
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A51,  \field GHE:Vertical:Single Object Name 44
+  A52,  \field GHE:Vertical:Single Object Name 44
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A52,  \field GHE:Vertical:Single Object Name 45
+  A53,  \field GHE:Vertical:Single Object Name 45
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A53,  \field GHE:Vertical:Single Object Name 46
+  A54,  \field GHE:Vertical:Single Object Name 46
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A54,  \field GHE:Vertical:Single Object Name 47
+  A55,  \field GHE:Vertical:Single Object Name 47
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A55,  \field GHE:Vertical:Single Object Name 48
+  A56,  \field GHE:Vertical:Single Object Name 48
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A56,  \field GHE:Vertical:Single Object Name 49
+  A57,  \field GHE:Vertical:Single Object Name 49
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A57,  \field GHE:Vertical:Single Object Name 50
+  A58,  \field GHE:Vertical:Single Object Name 50
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A58,  \field GHE:Vertical:Single Object Name 51
+  A59,  \field GHE:Vertical:Single Object Name 51
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A59,  \field GHE:Vertical:Single Object Name 52
+  A60,  \field GHE:Vertical:Single Object Name 52
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A60,  \field GHE:Vertical:Single Object Name 53
+  A61,  \field GHE:Vertical:Single Object Name 53
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A61,  \field GHE:Vertical:Single Object Name 54
+  A62,  \field GHE:Vertical:Single Object Name 54
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A62,  \field GHE:Vertical:Single Object Name 55
+  A63,  \field GHE:Vertical:Single Object Name 55
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A63,  \field GHE:Vertical:Single Object Name 56
+  A64,  \field GHE:Vertical:Single Object Name 56
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A64,  \field GHE:Vertical:Single Object Name 57
+  A65,  \field GHE:Vertical:Single Object Name 57
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A65,  \field GHE:Vertical:Single Object Name 58
+  A66,  \field GHE:Vertical:Single Object Name 58
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A66,  \field GHE:Vertical:Single Object Name 59
+  A67,  \field GHE:Vertical:Single Object Name 59
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A67,  \field GHE:Vertical:Single Object Name 60
+  A68,  \field GHE:Vertical:Single Object Name 60
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A68,  \field GHE:Vertical:Single Object Name 61
+  A69,  \field GHE:Vertical:Single Object Name 61
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A69,  \field GHE:Vertical:Single Object Name 62
+  A70,  \field GHE:Vertical:Single Object Name 62
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A70,  \field GHE:Vertical:Single Object Name 63
+  A71,  \field GHE:Vertical:Single Object Name 63
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A71,  \field GHE:Vertical:Single Object Name 64
+  A72,  \field GHE:Vertical:Single Object Name 64
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A72,  \field GHE:Vertical:Single Object Name 65
+  A73,  \field GHE:Vertical:Single Object Name 65
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A73,  \field GHE:Vertical:Single Object Name 66
+  A74,  \field GHE:Vertical:Single Object Name 66
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A74,  \field GHE:Vertical:Single Object Name 67
+  A75,  \field GHE:Vertical:Single Object Name 67
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A75,  \field GHE:Vertical:Single Object Name 68
+  A76,  \field GHE:Vertical:Single Object Name 68
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A76,  \field GHE:Vertical:Single Object Name 69
+  A77,  \field GHE:Vertical:Single Object Name 69
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A77,  \field GHE:Vertical:Single Object Name 70
+  A78,  \field GHE:Vertical:Single Object Name 70
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A78,  \field GHE:Vertical:Single Object Name 71
+  A79,  \field GHE:Vertical:Single Object Name 71
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A79,  \field GHE:Vertical:Single Object Name 72
+  A80,  \field GHE:Vertical:Single Object Name 72
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A80,  \field GHE:Vertical:Single Object Name 73
+  A81,  \field GHE:Vertical:Single Object Name 73
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A81,  \field GHE:Vertical:Single Object Name 74
+  A82,  \field GHE:Vertical:Single Object Name 74
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A82,  \field GHE:Vertical:Single Object Name 75
+  A83,  \field GHE:Vertical:Single Object Name 75
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A83,  \field GHE:Vertical:Single Object Name 76
+  A84,  \field GHE:Vertical:Single Object Name 76
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A84,  \field GHE:Vertical:Single Object Name 77
+  A85,  \field GHE:Vertical:Single Object Name 77
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A85,  \field GHE:Vertical:Single Object Name 78
+  A86,  \field GHE:Vertical:Single Object Name 78
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A86,  \field GHE:Vertical:Single Object Name 79
+  A87,  \field GHE:Vertical:Single Object Name 79
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A87,  \field GHE:Vertical:Single Object Name 80
+  A88,  \field GHE:Vertical:Single Object Name 80
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A88,  \field GHE:Vertical:Single Object Name 81
+  A89,  \field GHE:Vertical:Single Object Name 81
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A89,  \field GHE:Vertical:Single Object Name 82
+  A90,  \field GHE:Vertical:Single Object Name 82
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A90,  \field GHE:Vertical:Single Object Name 83
+  A91,  \field GHE:Vertical:Single Object Name 83
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A91,  \field GHE:Vertical:Single Object Name 84
+  A92,  \field GHE:Vertical:Single Object Name 84
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A92,  \field GHE:Vertical:Single Object Name 85
+  A93,  \field GHE:Vertical:Single Object Name 85
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A93,  \field GHE:Vertical:Single Object Name 86
+  A94,  \field GHE:Vertical:Single Object Name 86
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A94,  \field GHE:Vertical:Single Object Name 87
+  A95,  \field GHE:Vertical:Single Object Name 87
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A95,  \field GHE:Vertical:Single Object Name 88
+  A96,  \field GHE:Vertical:Single Object Name 88
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A96,  \field GHE:Vertical:Single Object Name 89
+  A97,  \field GHE:Vertical:Single Object Name 89
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A97,  \field GHE:Vertical:Single Object Name 90
+  A98,  \field GHE:Vertical:Single Object Name 90
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A98,  \field GHE:Vertical:Single Object Name 91
+  A99,  \field GHE:Vertical:Single Object Name 91
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A99,  \field GHE:Vertical:Single Object Name 92
+  A100,  \field GHE:Vertical:Single Object Name 92
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A100, \field GHE:Vertical:Single Object Name 93
+  A101, \field GHE:Vertical:Single Object Name 93
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A101, \field GHE:Vertical:Single Object Name 94
+  A102, \field GHE:Vertical:Single Object Name 94
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A102, \field GHE:Vertical:Single Object Name 95
+  A103, \field GHE:Vertical:Single Object Name 95
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A103, \field GHE:Vertical:Single Object Name 96
+  A104, \field GHE:Vertical:Single Object Name 96
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A104, \field GHE:Vertical:Single Object Name 97
+  A105, \field GHE:Vertical:Single Object Name 97
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A105, \field GHE:Vertical:Single Object Name 98
+  A106, \field GHE:Vertical:Single Object Name 98
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A106, \field GHE:Vertical:Single Object Name 99
+  A107, \field GHE:Vertical:Single Object Name 99
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
-  A107; \field GHE:Vertical:Single Object Name 100
+  A108; \field GHE:Vertical:Single Object Name 100
         \type object-list
         \object-list GroundHeatExchangerVerticalSingleNames
 
