@@ -117,6 +117,7 @@ extern "C" {
 #include <EnergyPlus/PlantPipingSystemsManager.hh>
 #include <EnergyPlus/PluginManager.hh>
 #include <EnergyPlus/PollutionModule.hh>
+#include <EnergyPlus/PsychCacheData.hh> 
 #include <EnergyPlus/Psychrometrics.hh>
 #include <EnergyPlus/RefrigeratedCase.hh>
 #include <EnergyPlus/ReportCoilSelection.hh>
@@ -251,7 +252,7 @@ namespace SimulationManager {
 
         PostIPProcessing(state);
 
-        InitializePsychRoutines(state);
+        //InitializePsychRoutines(state);
 
         state.dataGlobal->BeginSimFlag = true;
         state.dataGlobal->BeginFullSimFlag = false;
@@ -265,6 +266,7 @@ namespace SimulationManager {
 
         OpenOutputFiles(state);
         GetProjectData(state);
+        InitializePsychRoutines(state);//test
         CheckForMisMatchedEnvironmentSpecifications(state);
         CheckForRequestedReporting(state);
         SetPredefinedTables(state);
@@ -1315,6 +1317,7 @@ namespace SimulationManager {
                                          "cubic spline interpolations in replacement of PsychTsatFnPb .");
                         // Mode06 CSpline interpolation (64 Pa bin size + 20/16 bit)
                         state.dataPsychrometrics->useInterpolationPsychTsatFnPb = true;
+                        psatprecision_bits = 20
                     }
                     if (overrideMaxZoneTempDiff) {
                         ShowWarningError(

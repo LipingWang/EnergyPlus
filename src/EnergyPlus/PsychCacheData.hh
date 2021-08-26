@@ -95,12 +95,14 @@ constexpr int twbprecision_bits = 20;
 #endif
 #ifdef EP_cache_PsyPsatFnTemp
 constexpr int psatcache_size = 1024 * 1024;
-constexpr int psatprecision_bits = 24; // 28  //24  //32
+constexpr int psatprecision_bits = 24; // 28  //24  //32//test
+//int psatprecision_bits = 24;
 constexpr Int64 psatcache_mask = psatcache_size - 1;
 #endif
 #ifdef EP_cache_PsyTsatFnPb
 constexpr int tsatcache_size = 1024 * 1024;
-constexpr int tsatprecision_bits = 24; // 20
+//constexpr int tsatprecision_bits = 24; // 20
+int psatprecision_bits = 24;
 constexpr Int64 tsatcache_mask = tsatcache_size - 1;
 #endif
 #ifdef EP_cache_PsyTsatFnHPb

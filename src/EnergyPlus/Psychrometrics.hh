@@ -1486,6 +1486,7 @@ namespace Psychrometrics {
     {
 
         std::uint64_t constexpr Grid_Shift = 64 - 12 - tsatprecision_bits;
+        //std::uint64_t Grid_Shift = 64 - 12 - tsatprecision_bits;//test
         DISABLE_WARNING_PUSH
         DISABLE_WARNING_STRICT_ALIASING
         Int64 const Pb_tag(*reinterpret_cast<Int64 const *>(&Press) >> Grid_Shift);
