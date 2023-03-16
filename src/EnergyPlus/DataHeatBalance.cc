@@ -417,7 +417,7 @@ void CheckAndSetConstructionProperties(EnergyPlusData &state,
         bool TypeIsNotWindow =
             (thisMaterial->Group == Material::MaterialGroup::Invalid || thisMaterial->Group == Material::MaterialGroup::Air ||
              thisMaterial->Group == Material::MaterialGroup::RegularMaterial || thisMaterial->Group == Material::MaterialGroup::EcoRoof ||
-             thisMaterial->Group == Material::MaterialGroup::IRTMaterial);
+             thisMaterial->Group == Material::MaterialGroup::IRTMaterial||thisMaterial->Group == Material::MaterialGroup::IndoorEco);
         if (!thisConstruct.TypeIsWindow && !TypeIsNotWindow) assert(false);
     }
 
@@ -758,6 +758,18 @@ void CheckAndSetConstructionProperties(EnergyPlusData &state,
         }
     }
 
+    if (state.dataMaterial->Material(thisConstruct.LayerPoint(TotLayers))->Group == Material::MaterialGroup::IndoorEco) {
+        thisConstruct.TypeIsIndoorEco = true;
+        // need to check IndoorEco is the last inside layer
+        for (Layer = 1; Layer <= TotLayers-1; ++Layer) {
+            if (state.dataMaterial->Material(thisConstruct.LayerPoint(Layer))->Group == Material::MaterialGroup::IndoorEco) {
+                ShowSevereError(state,
+                                format("CheckAndSetConstructionProperties: Indoor Greenery System was not defined as the inside layer for construction {}", thisConstruct.Name));
+                ShowContinueError(state, format("  Error in material {}", state.dataMaterial->Material(thisConstruct.LayerPoint(Layer))->Name));
+                ErrorsFound = true;
+            }
+        }
+    }
     if (state.dataMaterial->Material(thisConstruct.LayerPoint(1))->Group == Material::MaterialGroup::IRTMaterial) {
         thisConstruct.TypeIsIRT = true;
         if (thisConstruct.TotLayers != 1) {

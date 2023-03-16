@@ -386,6 +386,8 @@ set(SRC
     ICEngineElectricGenerator.hh
     IceThermalStorage.cc
     IceThermalStorage.hh
+    IndoorEco.cc
+    IndoorEco.hh
     InputProcessing/CsvParser.cc
     InputProcessing/CsvParser.hh
     InputProcessing/DataStorage.hh
