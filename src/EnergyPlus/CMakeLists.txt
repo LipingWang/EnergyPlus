@@ -393,6 +393,8 @@ set(SRC
     "${CMAKE_CURRENT_BINARY_DIR}/EmbeddedEpJSONSchema.cc"
     IOFiles.cc
     IOFiles.hh
+    IndoorEco.cc
+    IndoorEco.hh
     InputProcessing/IdfParser.cc
     InputProcessing/IdfParser.hh
     InputProcessing/InputProcessor.cc

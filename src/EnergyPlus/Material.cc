@@ -145,8 +145,8 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
     int RegRMat;                       // Regular Materials -- R only property definition
     int AirMat;                        // Air space materials in opaque constructions
     int IRTMat;                        // Infrared Transmitting Materials -- R only property definition
-
     int EcoRoofMat;                     // Materials for ecoRoof
+    int IndoorEcoMat;                   // Materials for indoor eco/indoor greenery systems
     int NumGas;                         // Index for loop over gap gases in a mixture
     int NumGases;                       // Number of gasses in a mixture
     GasType gasType = GasType::Invalid; // Gas type index: 1=air, 2=argon, 3=krypton, 4=xenon
@@ -190,6 +190,7 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
     state.dataHeatBal->TotScreens = state.dataInputProcessing->inputProcessor->getNumObjectsFound(state, "WindowMaterial:Screen");
     state.dataHeatBal->TotBlinds = state.dataInputProcessing->inputProcessor->getNumObjectsFound(state, "WindowMaterial:Blind");
     EcoRoofMat = state.dataInputProcessing->inputProcessor->getNumObjectsFound(state, "Material:RoofVegetation");
+    IndoorEcoMat = state.dataInputProcessing->inputProcessor->getNumObjectsFound(state, "Material:IndoorGreenery");
     state.dataHeatBal->TotSimpleWindow = state.dataInputProcessing->inputProcessor->getNumObjectsFound(state, "WindowMaterial:SimpleGlazingSystem");
 
     state.dataHeatBal->W5GlsMatEQL = state.dataInputProcessing->inputProcessor->getNumObjectsFound(state, "WindowMaterial:Glazing:EquivalentLayer");
@@ -201,7 +202,7 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
 
     state.dataMaterial->TotMaterials = RegMat + RegRMat + AirMat + state.dataHeatBal->W5GlsMat + state.dataHeatBal->W5GlsMatAlt +
                                        state.dataHeatBal->W5GasMat + state.dataHeatBal->W5GasMatMixture + state.dataHeatBal->TotShades +
-                                       state.dataHeatBal->TotScreens + state.dataHeatBal->TotBlinds + EcoRoofMat + IRTMat +
+                                       state.dataHeatBal->TotScreens + state.dataHeatBal->TotBlinds + EcoRoofMat + IndoorEcoMat+ IRTMat +
                                        state.dataHeatBal->TotSimpleWindow + state.dataMaterial->TotComplexShades + state.dataHeatBal->TotComplexGaps +
                                        state.dataHeatBal->W5GlsMatEQL + state.dataHeatBal->TotShadesEQL + state.dataHeatBal->TotDrapesEQL +
                                        state.dataHeatBal->TotBlindsEQL + state.dataHeatBal->TotScreensEQL + state.dataHeatBal->W5GapMatEQL;
@@ -2572,6 +2573,71 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
                                      thisMaterial->Porosity));
             ShowContinueError(state, "Simulation continues.");
             thisMaterial->InitMoisture = thisMaterial->Porosity;
+        }
+    }
+    // IndoorEco Materials
+    state.dataHeatBalMgr->CurrentModuleObject = "Material:IndoorGreenery";
+    for (Loop = 1; Loop <= IndoorEcoMat; ++Loop) {
+        // Get input data from indoor greenery system objects in idf
+
+        state.dataInputProcessing->inputProcessor->getObjectItem(state,
+                                                                 state.dataHeatBalMgr->CurrentModuleObject,
+                                                                 Loop,
+                                                                 MaterialNames,
+                                                                 MaterialNumAlpha,
+                                                                 MaterialProps,
+                                                                 MaterialNumProp,
+                                                                 IOStat,
+                                                                 state.dataIPShortCut->lNumericFieldBlanks,
+                                                                 state.dataIPShortCut->lAlphaFieldBlanks,
+                                                                 state.dataIPShortCut->cAlphaFieldNames,
+                                                                 state.dataIPShortCut->cNumericFieldNames);
+        if (GlobalNames::VerifyUniqueInterObjectName(state,
+                                                     state.dataHeatBalMgr->UniqueMaterialNames,
+                                                     MaterialNames(1),
+                                                     state.dataHeatBalMgr->CurrentModuleObject,
+                                                     state.dataIPShortCut->cAlphaFieldNames(1),
+                                                     ErrorsFound)) {
+            ShowContinueError(state, "...All Material names must be unique regardless of subtype.");
+            continue;
+        }
+
+        // this part is similar to the regular material
+        // Load the material derived type from the input data.
+        ++MaterNum;
+        auto *thisMaterial = new MaterialChild;
+        state.dataMaterial->Material(MaterNum) = thisMaterial;
+        thisMaterial->group = Group::IndoorEco;
+
+        // Get indoor greenery system properties,
+        thisMaterial->LA = MaterialProps(1);
+        thisMaterial->Name = UtilityRoutines::MakeUPPERCase(MaterialNames(1));
+        thisMaterial->ETCalculationMethod = 1; // default
+        if (UtilityRoutines::SameString(UtilityRoutines::MakeUPPERCase(MaterialNames(2)), "PENMANMONTEITH")) {
+            thisMaterial->ETCalculationMethod = 1; // default
+        } else if (UtilityRoutines::SameString(UtilityRoutines::MakeUPPERCase(MaterialNames(2)), "STANGHELLINI")) {
+            thisMaterial->ETCalculationMethod = 2;
+        } else if (UtilityRoutines::SameString(UtilityRoutines::MakeUPPERCase(MaterialNames(2)), "DATADRIVEN")) {
+            thisMaterial->ETCalculationMethod = 3;
+        }
+        thisMaterial->Roughness =
+            static_cast<SurfaceRoughness>(getEnumerationValue(SurfaceRoughnessUC, UtilityRoutines::MakeUPPERCase(MaterialNames(3))));
+        thisMaterial->Thickness = MaterialProps(2);
+        thisMaterial->Conductivity = MaterialProps(3);
+        thisMaterial->Density = MaterialProps(4);
+        thisMaterial->SpecHeat = MaterialProps(5);
+        thisMaterial->AbsorpThermal = MaterialProps(6);
+        thisMaterial->AbsorpSolar = MaterialProps(7);
+        thisMaterial->AbsorpVisible = MaterialProps(8);
+
+        if (thisMaterial->Conductivity > 0.0) {
+            state.dataHeatBal->NominalR(MaterNum) = thisMaterial->Thickness / thisMaterial->Conductivity;
+            thisMaterial->Resistance = state.dataHeatBal->NominalR(MaterNum);
+        } else {
+            ShowSevereError(
+                state, format("{}=\"{}\" is not defined correctly.", state.dataHeatBalMgr->CurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
+            ShowContinueError(state, format("{} is <=0.", state.dataIPShortCut->cNumericFieldNames(7)));
+            ErrorsFound = true;
         }
     }
 

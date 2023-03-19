@@ -12215,7 +12215,7 @@ namespace SurfaceGeometry {
                     ErrorsFound = true;
                 } else {
 
-                    Array1D_string const cMaterialGroupType({-1, 18},
+                    Array1D_string const cMaterialGroupType({-1, 19},
                                                             {"invalid",
                                                              "Material/Material:NoMass",
                                                              "Material:AirGap",
@@ -12226,6 +12226,7 @@ namespace SurfaceGeometry {
                                                              "WindowMaterial:GasMixture",
                                                              "WindowMaterial:Screen",
                                                              "Material:RoofVegetation",
+                                                             "Material:IndoorGreenery",
                                                              "Material:InfraredTransparent",
                                                              "WindowMaterial:SimpleGlazingSystem",
                                                              "WindowMaterial:ComplexShade",

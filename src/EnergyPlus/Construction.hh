@@ -215,6 +215,8 @@ namespace Construction {
         bool WindowTypeBSDF = false;                         // True for complex window, false otherwise
         bool TypeIsEcoRoof = false;                          // -- true for construction with ecoRoof outside, the flag
         //-- is turned on when the outside layer is of type EcoRoof
+        bool TypeIsIndoorEco = false; // -- true for construction with indoorEco inside, the flag
+        //-- is turned on when the inside layer is of type indoorEco
         bool TypeIsIRT = false;          // -- true for construction with IRT material
         bool TypeIsCfactorWall = false;  // -- true for construction with Construction:CfactorUndergroundWall
         bool TypeIsFfactorFloor = false; // -- true for construction with Construction:FfactorGroundFloor

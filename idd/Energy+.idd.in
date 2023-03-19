@@ -5006,7 +5006,72 @@ Material:AirGap,
        \units m2-K/W
        \type real
        \minimum> 0
-
+Material:IndoorGreenery,
+  \memo IndoorEco model, indoor greenery system added as a construction layer.
+  A1 ,\field Name
+      \required-field
+	  \type alpha
+	  \reference MaterialName
+  N1 ,\field Total Leaf Area
+      \type real
+	  \note The module is designed for indoor greenery systems.
+	  \minimum>0.001
+	  \units m
+  A2 ,\field ET Calculation Method
+      \note  Model selection for caclulating evapotranspiration of indoor greenery system.
+      \type choice
+      \key PenmanMonteith
+      \key Stanghellini
+	  \key Datadriven
+      \default PenmanMonteith 
+  A3 ,\field Roughness
+      \type choice
+      \key VeryRough
+      \key MediumRough
+      \key Rough
+      \key Smooth
+      \key MediumSmooth
+      \key VerySmooth
+      \default MediumRough
+  N2 ,\field Thickness
+      \note 
+      \units m
+      \type real
+      \default 0.1
+      \minimum> 0.001
+  N3 ,\field Conductivity of Indoor Greenery System
+      \units W/m-K
+      \type real
+      \note Thermal conductivity of indoor plants.
+      \default 0.268
+      \minimum  0.001
+  N4 ,\field Density of Indoor Greenery System
+      \units kg/m3
+      \note  
+      \type real
+      \minimum 10
+      \default 300
+  N5 ,\field Specific Heat of Indoor Greenery System
+      \units J/kg-K
+      \type real
+      \note  
+      \minimum> 500
+      \default 1200
+  N6 ,\field Thermal Absorptance
+      \type real
+      \minimum> 0.8
+      \default .9
+      \maximum 1.0
+  N7 ,\field Solar Absorptance
+      \type real
+      \default .70
+      \minimum 0.40
+      \maximum 0.9
+  N8 ;\field Visible Absorptance
+      \type real
+      \minimum> 0.5
+      \default .75
+      \maximum 1.0
 Material:RoofVegetation,
   \memo EcoRoof model, plant layer plus soil layer
   \memo Implemented by Portland State University

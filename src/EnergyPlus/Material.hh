@@ -78,6 +78,7 @@ namespace Material {
         WindowGasMixture,
         Screen,
         EcoRoof,
+        IndoorEco,
         IRTransparent,
         WindowSimpleGlazing,
         ComplexWindowShade,
@@ -310,6 +311,9 @@ namespace Material {
         Real64 InitMoisture = 0.0;        // Initial soil moisture DJS
         Real64 MinMoisture = 0.0;         // Minimum moisture allowed DJS
         Real64 RStomata = 0.0;            // Minimum stomatal resistance DJS
+        // IndoorEco-Related properties
+        int ETCalculationMethod = 0;      // 1- Penman-Monteith; 2- Stanghellini; 3- Data-driven
+        Real64 LA = 0.0;                  // plants' total leaf area
         // HAMT
         int niso = -1;                                       // Number of data points
         Array1D<Real64> isodata = Array1D<Real64>(27, 0.0);  // isotherm values

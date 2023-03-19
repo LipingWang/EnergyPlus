@@ -187,6 +187,7 @@ struct HysteresisPhaseChangeData;
 struct ICEngineElectricGeneratorData;
 struct IPShortCutsData;
 struct IceThermalStorageData;
+struct IndoorEcoData;
 struct IntegratedHeatPumpGlobalData;
 struct InternalHeatGainsData;
 struct LoopNodeData;
