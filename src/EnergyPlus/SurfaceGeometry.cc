@@ -904,6 +904,7 @@ namespace SurfaceGeometry {
         state.dataSurface->SurfMaterialMovInsulInt.allocate(state.dataSurface->TotSurfaces);
         state.dataSurface->SurfSchedMovInsulExt.allocate(state.dataSurface->TotSurfaces);
         state.dataSurface->SurfSchedMovInsulInt.allocate(state.dataSurface->TotSurfaces);
+        state.dataSurface->SurfMaterialIndoorEco.allocate(state.dataSurface->TotSurfaces);
         for (int SurfNum = 1; SurfNum <= state.dataSurface->TotSurfaces; ++SurfNum) {
             state.dataSurface->SurfShadowRecSurfNum(SurfNum) = 0;
             state.dataSurface->SurfShadowDiffuseSolRefl(SurfNum) = 0.0;
@@ -914,6 +915,7 @@ namespace SurfaceGeometry {
             state.dataSurface->SurfMaterialMovInsulInt(SurfNum) = 0;
             state.dataSurface->SurfSchedMovInsulExt(SurfNum) = 0;
             state.dataSurface->SurfSchedMovInsulInt(SurfNum) = 0;
+            state.dataSurface->SurfMaterialIndoorEco(SurfNum) = 0;
         }
         state.dataSurface->SurfExtEcoRoof.allocate(state.dataSurface->TotSurfaces);
         state.dataSurface->SurfExtCavityPresent.allocate(state.dataSurface->TotSurfaces);
@@ -2680,7 +2682,7 @@ namespace SurfaceGeometry {
             SetupShadeSurfacesForSolarCalcs(state); // if shading surfaces are solar collectors or PV, then we need full solar calc.
 
             GetMovableInsulationData(state, ErrorsFound);
-            GetSurfaceControlIndoorGreeneryData(state, ErrorsFound);  
+            GetSurfacePropertyIndoorGreeneryData(state, ErrorsFound);  
   
             if (state.dataSurface->CalcSolRefl) GetShadingSurfReflectanceData(state, ErrorsFound);
 
@@ -2939,6 +2941,12 @@ namespace SurfaceGeometry {
             for (int SurfNum = 1; SurfNum <= state.dataSurface->TotSurfaces; SurfNum++) {
                 if (state.dataSurface->SurfMaterialMovInsulExt(SurfNum) > 0 || state.dataSurface->SurfMaterialMovInsulInt(SurfNum) > 0) {
                     state.dataHeatBalSurf->SurfMovInsulIndexList.push_back(SurfNum);
+                }
+            }
+            // Initialize surface with indoor greenery system index list
+            for (int SurfNum = 1; SurfNum <= state.dataSurface->TotSurfaces; SurfNum++) {
+                if (state.dataSurface->SurfMaterialIndoorEco(SurfNum) > 0 ) {
+                    state.dataHeatBalSurf->SurfIndoorEcoIndexList.push_back(SurfNum);
                 }
             }
         }
@@ -12365,7 +12373,7 @@ namespace SurfaceGeometry {
             }
         }
     }
-    void GetSurfaceControlIndoorGreeneryData(EnergyPlusData &state, bool &ErrorsFound) // If errors found in input
+    void GetSurfacePropertyIndoorGreeneryData(EnergyPlusData &state, bool &ErrorsFound) // If errors found in input
     {
 
         // SUBROUTINE INFORMATION:
@@ -12375,14 +12383,14 @@ namespace SurfaceGeometry {
         //       RE-ENGINEERED  na
 
         // PURPOSE OF THIS SUBROUTINE:
-        // This subroutine gets the data from the object SurfaceControl:IndoorGreenery that can be associated with
+        // This subroutine gets the data from the object SurfaceProperty:IndoorGreenery that can be associated with
         // a surface(s).
 
         // METHODOLOGY EMPLOYED:
         // na
 
         // REFERENCES:
-        // SurfaceControl:IndoorGreenery,
+        // SurfaceProperty:IndoorGreenery,
         // \memo Material for Interior opaque surfaces only
         //A1, \field Surface Name
         // \required-field
@@ -12409,7 +12417,7 @@ namespace SurfaceGeometry {
         //int SchNum;
 
         auto &cCurrentModuleObject = state.dataIPShortCut->cCurrentModuleObject;
-        cCurrentModuleObject = "SurfaceControl:IndoorGreenery";
+        cCurrentModuleObject = "SurfaceProperty:IndoorGreenery";
         NIndoorEco = state.dataInputProcessing->inputProcessor->getNumObjectsFound(state, cCurrentModuleObject);
         for (Loop = 1; Loop <= NIndoorEco; ++Loop) {
             state.dataInputProcessing->inputProcessor->getObjectItem(state,

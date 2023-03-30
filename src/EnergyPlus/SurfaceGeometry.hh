@@ -288,7 +288,7 @@ namespace SurfaceGeometry {
 
     void GetMovableInsulationData(EnergyPlusData &state, bool &ErrorsFound); // If errors found in input
 
-    void GetSurfaceControlIndoorGreeneryData(EnergyPlusData &state, bool &ErrorsFound);
+    void GetSurfacePropertyIndoorGreeneryData(EnergyPlusData &state, bool &ErrorsFound);
 
     void CalculateZoneVolume(EnergyPlusData &state);
 

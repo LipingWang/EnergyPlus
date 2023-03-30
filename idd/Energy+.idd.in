@@ -17043,7 +17043,7 @@ SurfaceControl:MovableInsulation,
       \type object-list
       \object-list ScheduleNames
 
-SurfaceControl:IndoorGreenery,
+SurfaceProperty:IndoorGreenery,
       \memo Material for Interior opaque surfaces only
   A1, \field Surface Name
       \required-field
