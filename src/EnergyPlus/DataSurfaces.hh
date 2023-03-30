@@ -1283,6 +1283,7 @@ struct SurfacesData : BaseGlobalStruct
     bool AnyHeatBalanceInsideSourceTerm = false;       // True if any SurfaceProperty:HeatBalanceSourceTerm inside face used
     bool AnyHeatBalanceOutsideSourceTerm = false;      // True if any SurfaceProperty:HeatBalanceSourceTerm outside face used
     bool AnyMovableInsulation = false;                 // True if any movable insulation presents
+    bool AnyIndoorEco = false;                         // True if any indoor greenery system presents
     bool AnyMovableSlat = false;                       // True if there are any movable slats for window blinds presented
 
     Array1D_int SurfAdjacentZone; // Array of adjacent zones to each surface
@@ -1357,6 +1358,9 @@ struct SurfacesData : BaseGlobalStruct
     Array1D<int> SurfMaterialMovInsulInt; // Pointer to the material used for interior movable insulation
     Array1D<int> SurfSchedMovInsulExt;    // Schedule for exterior movable insulation
     Array1D<int> SurfSchedMovInsulInt;    // Schedule for interior movable insulation
+
+    // Surface indoor greenery systems
+    Array1D<int> SurfMaterialIndoorEco;   // Pointer to the material used for indoor greenery 
 
     // Surface EMS
     Array1D<bool> SurfEMSConstructionOverrideON;          // if true, EMS is calling to override the construction value
@@ -1687,6 +1691,7 @@ struct SurfacesData : BaseGlobalStruct
         this->ShadingTransmittanceVaries = false;
         this->UseRepresentativeSurfaceCalculations = false;
         this->AnyMovableInsulation = false;
+        this->AnyIndoorEco = false;
         this->AnyMovableSlat = false;
         this->SurfWinInsideGlassCondensationFlag.deallocate();
         this->SurfWinInsideFrameCondensationFlag.deallocate();
@@ -1743,6 +1748,7 @@ struct SurfacesData : BaseGlobalStruct
         this->SurfShadowDisabledZoneList.deallocate();
         this->SurfMaterialMovInsulExt.deallocate();
         this->SurfMaterialMovInsulInt.deallocate();
+        this->SurfMaterialIndoorEco.deallocate();
         this->SurfSchedMovInsulExt.deallocate();
         this->SurfSchedMovInsulInt.deallocate();
         this->SurfEMSConstructionOverrideON.deallocate();

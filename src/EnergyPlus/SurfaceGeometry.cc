@@ -2682,7 +2682,8 @@ namespace SurfaceGeometry {
             SetupShadeSurfacesForSolarCalcs(state); // if shading surfaces are solar collectors or PV, then we need full solar calc.
 
             GetMovableInsulationData(state, ErrorsFound);
-
+            GetSurfaceControlIndoorGreeneryData(state, ErrorsFound);  
+  
             if (state.dataSurface->CalcSolRefl) GetShadingSurfReflectanceData(state, ErrorsFound);
 
             LayNumOutside = 0;
@@ -12366,7 +12367,165 @@ namespace SurfaceGeometry {
             }
         }
     }
+    void GetSurfaceControlIndoorGreeneryData(EnergyPlusData &state, bool &ErrorsFound) // If errors found in input
+    {
 
+        // SUBROUTINE INFORMATION:
+        //       AUTHOR         Liping Wang
+        //       DATE WRITTEN   March 2023
+        //       MODIFIED       na
+        //       RE-ENGINEERED  na
+
+        // PURPOSE OF THIS SUBROUTINE:
+        // This subroutine gets the data from the object SurfaceControl:IndoorGreenery that can be associated with
+        // a surface(s).
+
+        // METHODOLOGY EMPLOYED:
+        // na
+
+        // REFERENCES:
+        // SurfaceControl:IndoorGreenery,
+        // \memo Material for Interior opaque surfaces only
+        //A1, \field Surface Name
+        // \required-field
+        // \type object-list
+        //\object-list SurfaceNames
+        //A2, \field Material Name
+        //\required-field
+        //\type object-list
+        //\object-list MaterialName
+
+
+        // Using/Aliasing
+
+        //using ScheduleManager::GetScheduleIndex;
+
+        // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
+        int NAlphas;
+        int NNums;
+        int IOStat;
+        int Loop;
+        int NIndoorEco;
+        int SurfNum;
+        int IndoorEcoNum;
+        //int SchNum;
+
+        auto &cCurrentModuleObject = state.dataIPShortCut->cCurrentModuleObject;
+        cCurrentModuleObject = "SurfaceControl:IndoorGreenery";
+        NIndoorEco = state.dataInputProcessing->inputProcessor->getNumObjectsFound(state, cCurrentModuleObject);
+        for (Loop = 1; Loop <= NIndoorEco; ++Loop) {
+            state.dataInputProcessing->inputProcessor->getObjectItem(state,
+                                                                     cCurrentModuleObject,
+                                                                     Loop,
+                                                                     state.dataIPShortCut->cAlphaArgs,
+                                                                     NAlphas,
+                                                                     state.dataIPShortCut->rNumericArgs,
+                                                                     NNums,
+                                                                     IOStat,
+                                                                     state.dataIPShortCut->lNumericFieldBlanks,
+                                                                     state.dataIPShortCut->lAlphaFieldBlanks,
+                                                                     state.dataIPShortCut->cAlphaFieldNames,
+                                                                     state.dataIPShortCut->cNumericFieldNames);
+            SurfNum =
+                UtilityRoutines::FindItemInList(state.dataIPShortCut->cAlphaArgs(1), state.dataSurface->Surface, state.dataSurface->TotSurfaces);
+            IndoorEcoNum = UtilityRoutines::FindItemInPtrList(
+                state.dataIPShortCut->cAlphaArgs(2), state.dataMaterial->Material, state.dataMaterial->TotMaterials);
+            auto *thisMaterial = state.dataMaterial->Material(IndoorEcoNum);
+            //SchNum = GetScheduleIndex(state, state.dataIPShortCut->cAlphaArgs(4));
+            
+            if (SurfNum == 0) {
+                ShowSevereError(state,
+                                format("{}, {}=\"{}\", invalid data.",
+                                       cCurrentModuleObject,
+                                       state.dataIPShortCut->cAlphaFieldNames(1),
+                                       state.dataIPShortCut->cAlphaArgs(1)));
+                ShowContinueError(state, format(" invalid (not found) {}", state.dataIPShortCut->cAlphaFieldNames(1)));
+                ErrorsFound = true;
+            } else {
+                if (IndoorEcoNum == 0) {
+                    ShowSevereError(state,
+                                    format("{}, {}=\"{}\", invalid data.",
+                                           cCurrentModuleObject,
+                                           state.dataIPShortCut->cAlphaFieldNames(1),
+                                           state.dataIPShortCut->cAlphaArgs(1)));
+                    ShowContinueError(
+                        state,
+                        format(" invalid (not found) {}=\"{}\"", state.dataIPShortCut->cAlphaFieldNames(2), state.dataIPShortCut->cAlphaArgs(2)));
+                    ErrorsFound = true;
+                } else {
+
+                    Array1D_string const cMaterialGroupType({-1, 19},
+                                                            {"invalid",
+                                                             "Material/Material:NoMass",
+                                                             "Material:AirGap",
+                                                             "WindowMaterial:Shade",
+                                                             "WindowMaterial:Glazing*",
+                                                             "WindowMaterial:Gas",
+                                                             "WindowMaterial:Blind",
+                                                             "WindowMaterial:GasMixture",
+                                                             "WindowMaterial:Screen",
+                                                             "Material:RoofVegetation",
+                                                             "Material:IndoorGreenery",
+                                                             "Material:InfraredTransparent",
+                                                             "WindowMaterial:SimpleGlazingSystem",
+                                                             "WindowMaterial:ComplexShade",
+                                                             "WindowMaterial:Gap",
+                                                             "WindowMaterial:Glazing:EquivalentLayer",
+                                                             "WindowMaterial:Shade:EquivalentLayer",
+                                                             "WindowMaterial:Drape:EquivalentLayer",
+                                                             "WindowMaterial:Blind:EquivalentLayer",
+                                                             "WindowMaterial:Screen:EquivalentLayer",
+                                                             "WindowMaterial:Gap:EquivalentLayer"});
+
+                    Material::Group const MaterialLayerGroup = thisMaterial->group;
+                    if ((MaterialLayerGroup != Material::Group::IndoorEco)) {
+                        ShowSevereError(state, format("Invalid indoor greenery material for {}:", cCurrentModuleObject));
+                        ShowSevereError(
+                            state,
+                            format("...Indoor greenery material type specified = {}", cMaterialGroupType(static_cast<int>(MaterialLayerGroup))));
+                        ShowSevereError(state, format("...Indoor greenery material name specified = {}", state.dataIPShortCut->cAlphaArgs(2)));
+                        ErrorsFound = true;
+                    }                    
+                }
+            }
+            if (state.dataSurface->SurfMaterialIndoorEco(SurfNum) > 0) {
+                ShowSevereError(state,
+                                cCurrentModuleObject + ", " + state.dataIPShortCut->cAlphaFieldNames(1) + "=\"" +
+                                    state.dataIPShortCut->cAlphaArgs(1) + "\", already assigned.");
+                ShowContinueError(state,
+                                  "\"Inside\", was already assigned Material=\"" +
+                                      state.dataMaterial->Material(state.dataSurface->SurfMaterialIndoorEco(SurfNum))->Name + "\".");
+                ShowContinueError(state, "attempting to assign Material=\"" + thisMaterial->Name + "\".");
+                ErrorsFound = true;
+            }
+            state.dataSurface->SurfMaterialIndoorEco(SurfNum) = IndoorEcoNum;
+            state.dataSurface->AnyIndoorEco = true;
+            if (thisMaterial->Resistance <= 0.0) {
+                if (thisMaterial->Conductivity <= 0.0 || thisMaterial->Thickness <= 0.0) {
+                    ShowSevereError(state,
+                                    format("{}, {}=\"{}\", invalid material.",
+                                           cCurrentModuleObject,
+                                           state.dataIPShortCut->cAlphaFieldNames(2),
+                                           state.dataIPShortCut->cAlphaArgs(2)));
+                    ShowContinueError(state, "\"Inside\", invalid material for indoor greenery.");
+                    ShowContinueError(state,
+                                      format("Material=\"{}\",Resistance=[{:.3R}], must be > 0 for use in indoor greenery.",
+                                             thisMaterial->Name,
+                                             thisMaterial->Resistance));
+                    ErrorsFound = true;
+                } else if (thisMaterial->Conductivity > 0.0) {
+                    thisMaterial->Resistance = thisMaterial->Thickness / thisMaterial->Conductivity;
+                }
+            }
+            if (state.dataSurface->Surface(SurfNum).Class == SurfaceClass::Window) {
+                ShowSevereError(
+                    state,
+                    format("{}, {}=\"{}\"", cCurrentModuleObject, state.dataIPShortCut->cAlphaFieldNames(1), state.dataIPShortCut->cAlphaArgs(1)));
+                ShowContinueError(state, "invalid use on a Window. Use WindowShadingControl instead.");
+                ErrorsFound = true;
+            }
+        }
+    }
     // Calculates the volume (m3) of a zone using the surfaces as possible.
     void CalculateZoneVolume(EnergyPlusData &state)
     {

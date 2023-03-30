@@ -17043,6 +17043,17 @@ SurfaceControl:MovableInsulation,
       \type object-list
       \object-list ScheduleNames
 
+SurfaceControl:IndoorGreenery,
+      \memo Material for Interior opaque surfaces only
+  A1, \field Surface Name
+      \required-field
+      \type object-list
+      \object-list SurfaceNames
+  A2; \field Material Name
+      \required-field
+      \type object-list
+      \object-list MaterialName
+
 SurfaceProperty:OtherSideCoefficients,
       \memo This object sets the other side conditions for a surface in a variety of ways.
       \min-fields 8
