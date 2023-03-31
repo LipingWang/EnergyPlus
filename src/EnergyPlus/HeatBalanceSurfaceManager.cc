@@ -410,7 +410,10 @@ void InitSurfaceHeatBalance(EnergyPlusData &state)
         EvalOutsideMovableInsulation(state);
         EvalInsideMovableInsulation(state);
     }
-
+    // Calc indoor greenery properties
+    if (state.dataSurface->AnyIndoorEco) {
+        EvalIndoorEco(state);
+    }
     // There are no daily initializations done in this portion of the surface heat balance
 
     // There are no hourly initializations done in this portion of the surface heat balance
@@ -1522,6 +1525,11 @@ void AllocateSurfaceHeatBalArrays(EnergyPlusData &state)
         state.dataHeatBalSurf->SurfMovInsulHExt.dimension(state.dataSurface->TotSurfaces, 0.0);
         state.dataHeatBalSurf->SurfMovInsulHInt.dimension(state.dataSurface->TotSurfaces, 0.0);
     }
+    // allocate indoor greenery arrays
+    if (state.dataSurface->AnyIndoorEco) {
+        state.dataHeatBalSurf->SurfIndoorEcoPresent.dimension(state.dataSurface->TotSurfaces, false);
+        state.dataHeatBalSurf->SurfIndoorEcoH.dimension(state.dataSurface->TotSurfaces, 0.0); 
+    }
     state.dataHeatBalSurf->SurfAbsSolarExt.dimension(state.dataSurface->TotSurfaces, 0.0);
     state.dataHeatBalSurf->SurfAbsThermalExt.dimension(state.dataSurface->TotSurfaces, 0.0);
     state.dataHeatBalSurf->SurfRoughnessExt.dimension(state.dataSurface->TotSurfaces, Material::SurfaceRoughness::Invalid);
@@ -2426,6 +2434,20 @@ void EvalInsideMovableInsulation(EnergyPlusData &state)
         } else {
             state.dataHeatBalSurf->SurfAbsSolarInt(SurfNum) = thisMaterial->AbsorpSolar;
         }
+        state.dataHeatBalSurf->SurfAbsThermalInt(SurfNum) = thisMaterial->AbsorpThermal;
+    }
+}
+void EvalIndoorEco(EnergyPlusData &state)
+{
+    // This subroutine determines whether or not indoor greenery is present at the current time.
+    for (int SurfNum : state.dataHeatBalSurf->SurfIndoorEcoIndexList) {
+        int const MaterialIndex(state.dataSurface->SurfMaterialIndoorEco(SurfNum));
+        auto const *thisMaterial = dynamic_cast<const Material::MaterialChild *>(state.dataMaterial->Material(MaterialIndex));
+        assert(thisMaterial != nullptr);
+        Material::Group const MaterialGroupNum(thisMaterial->group);
+        state.dataHeatBalSurf->SurfIndoorEcoPresent(SurfNum) = true;
+        state.dataHeatBalSurf->SurfIndoorEcoH(SurfNum) = 1.0 / (thisMaterial->Resistance);
+        state.dataHeatBalSurf->SurfAbsSolarInt(SurfNum) = thisMaterial->AbsorpSolar;
         state.dataHeatBalSurf->SurfAbsThermalInt(SurfNum) = thisMaterial->AbsorpThermal;
     }
 }
