@@ -474,8 +474,6 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
             // Estimate number of nodes each layer of the construct will require
             // and calculate the nodal spacing from that
 
-            int ipts1 = 0.0; // Intermediate calculation for number of nodes per layer
-
             for (int Layer = 1; Layer <= LayersInConstruct; ++Layer) { // Begin loop thru layers ...
 
                 // The calculation of dxn used here is based on a standard stability
@@ -492,7 +490,7 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                 } else {
                     dxn = std::sqrt(2.0 * (rk(Layer) / rho(Layer) / cp(Layer)) * this->CTFTimeStep);
 
-                    ipts1 = int(dl(Layer) / dxn); // number of nodes=thickness/spacing
+                    int ipts1 = int(dl(Layer) / dxn); // number of nodes=thickness/spacing
 
                     // Limit the upper and lower bounds of the number of
                     // nodes to MaxCTFTerms and MinNodes respectively.
@@ -1299,7 +1297,7 @@ void ConstructionProps::calculateExponentialMatrix()
 
         // Use AMato to store the old values of AExp
         AMato = this->AExp;
-        bool Backup = true;
+        bool Backup = true; // Used when numerics get to small in Exponentiation
         this->AExp = 0.0;
 
         // Multiply the old value of AExp (AMato) by itself and store in AExp.
