@@ -72193,7 +72193,7 @@ Chiller:Electric:ASHRAE205,
   A21, \field Heat Recovery Inlet Node Name
        \note Not yet implemented / reserved for future use. Heat recovery is not yet within scope of ASHRAE Stanard 205.
        \type node
-  A21, \field Heat Recovery Outlet Node Name
+  A22, \field Heat Recovery Outlet Node Name
        \note Not yet implemented / reserved for future use. Heat recovery is not yet within scope of ASHRAE Stanard 205.
        \type node
   A23; \field End-Use Subcategory
