@@ -51988,7 +51988,7 @@ Coil:Cooling:DX:TwoSpeed,
        \memo and condenser fan), two-speed (or variable-speed). Requires two sets of performance
        \memo data and will interpolate between speeds. Modeled as a single coil (multi-speed
        \memo compressor or multiple compressors with row split or intertwined coil).
-  \min-fields 20
+       \min-fields 20
   A1 , \field Name
        \required-field
        \type alpha
@@ -52034,7 +52034,33 @@ Coil:Cooling:DX:TwoSpeed,
        \note Flow rate corresponding to rated total cooling capacity, Rated SHR
        \note and Rated COP. Should be between 0.00004027 m3/s and .00006041 m3/s per watt
        \note of rated total cooling capacity.
-  N5 , \field Unit Internal Static Air Pressure
+  N5 , \field High Speed 2017 Rated Evaporator Fan Power Per Volume Flow Rate
+       \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+       \note as defined in the 2017 version of ANSI/AHRI Standard 210/240. 
+       \note The test conditions vary external static pressure based on total cooling capacity.
+       \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), Energy
+       \note Efficiency Ratio (EER), Integrated Energy Efficiency Ratio (IEER), and the Standard Rating
+       \note (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file. This value is not
+       \note used for modeling the evaporator fan during simulations.
+       \type real
+       \units W/(m3/s)
+       \minimum 0.0
+       \maximum 1250.0
+       \default 773.3
+  N6 , \field High Speed 2023 Rated Evaporator Fan Power Per Volume Flow Rate
+       \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+       \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+       \note The test conditions vary external static pressure based on total cooling capacity.
+       \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), Energy
+       \note Efficiency Ratio (EER), Integrated Energy Efficiency Ratio (IEER), and the Standard Rating
+       \note (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file. This value is not
+       \note used for modeling the evaporator fan during simulations.
+       \type real
+       \units W/(m3/s)
+       \minimum 0.0
+       \maximum 1505.0
+       \default 934.4
+  N7 , \field Unit Internal Static Air Pressure
        \note Enter pressure drop for the unit containing the coil.
        \note This value is only used to calculate Energy Efficiency Ratio
        \note (EER), Integrated Energy Efficiency Ratio (IEER), and the
@@ -52084,7 +52110,7 @@ Coil:Cooling:DX:TwoSpeed,
        \note quadratic curve = a + b*PLR + c*PLR**2
        \note cubic curve = a + b*PLR + c*PLR**2 + d*PLR**3
        \note PLR = part load ratio (cooling load/steady state capacity)
-  N6 , \field Low Speed Gross Rated Total Cooling Capacity
+  N8 , \field Low Speed Gross Rated Total Cooling Capacity
        \note Total cooling capacity not accounting for the effect of supply air fan heat
        \required-field
        \type real
@@ -52094,7 +52120,7 @@ Coil:Cooling:DX:TwoSpeed,
        \note gross capacity excluding supply air fan heat
        \note rating point: air entering the cooling coil at 26.7 C dry-bulb/19.4 C wet-bulb, and
        \note air entering the outdoor condenser coil at 35 C dry-bulb/23.9 C wet-bulb
-  N7 , \field Low Speed Gross Rated Sensible Heat Ratio
+  N9 , \field Low Speed Gross Rated Sensible Heat Ratio
        \required-field
        \type real
        \minimum 0.5
@@ -52102,14 +52128,14 @@ Coil:Cooling:DX:TwoSpeed,
        \autosizable
        \note Gross Rated Sensible Heat Ratio (gross sensible capacity/gross total capacity)
        \note sensible and total capacities do not include supply fan heat
-  N8 , \field Low Speed Gross Rated Cooling COP
+  N10, \field Low Speed Gross Rated Cooling COP
        \note Gross cooling capacity divided by power input to the compressor and outdoor fan,
        \note does not include supply fan heat or supply fan electrical energy input
        \type real
        \units W/W
        \minimum> 0.0
        \default 3.0
-  N9 , \field Low Speed Rated Air Flow Rate
+  N11, \field Low Speed Rated Air Flow Rate
        \required-field
        \type real
        \units m3/s
@@ -52118,6 +52144,32 @@ Coil:Cooling:DX:TwoSpeed,
        \note Flow rate corresponding to rated total cooling capacity, Rated SHR
        \note and Rated COP. Should be between 0.00004027 m3/s and .00006041 m3/s per watt
        \note of rated total cooling capacity.
+  N12, \field Low Speed 2017 Rated Evaporator Fan Power Per Volume Flow Rate
+       \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+       \note as defined in the 2017 version of ANSI/AHRI Standard 210/240. 
+       \note The test conditions vary external static pressure based on total cooling capacity.
+       \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), Energy
+       \note Efficiency Ratio (EER), Integrated Energy Efficiency Ratio (IEER), and the Standard Rating
+       \note (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file. This value is not
+       \note used for modeling the evaporator fan during simulations.
+       \type real
+       \units W/(m3/s)
+       \minimum 0.0
+       \maximum 1250.0
+       \default 773.3
+  N13, \field Low Speed 2023 Rated Evaporator Fan Power Per Volume Flow Rate
+       \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+       \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+       \note The test conditions vary external static pressure based on total cooling capacity.
+       \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), Energy
+       \note Efficiency Ratio (EER), Integrated Energy Efficiency Ratio (IEER), and the Standard Rating
+       \note (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file. This value is not
+       \note used for modeling the evaporator fan during simulations.
+       \type real
+       \units W/(m3/s)
+       \minimum 0.0
+       \maximum 1505.0
+       \default 934.4
   A10, \field Low Speed Total Cooling Capacity Function of Temperature Curve Name
        \required-field
        \type object-list
@@ -52141,41 +52193,41 @@ Coil:Cooling:DX:TwoSpeed,
        \key AirCooled
        \key EvaporativelyCooled
        \default AirCooled
-  N10, \field Minimum Outdoor Dry-Bulb Temperature for Compressor Operation
+  N14, \field Minimum Outdoor Dry-Bulb Temperature for Compressor Operation
        \type real
        \default -25.0
        \units C
-  N11, \field High Speed Evaporative Condenser Effectiveness
+  N15, \field High Speed Evaporative Condenser Effectiveness
        \type real
        \units dimensionless
        \minimum 0.0
        \maximum 1.0
        \default 0.9
-  N12, \field High Speed Evaporative Condenser Air Flow Rate
+  N16, \field High Speed Evaporative Condenser Air Flow Rate
        \type real
        \units m3/s
        \minimum> 0.0
        \autosizable
        \note Used to calculate evaporative condenser water use
-  N13, \field High Speed Evaporative Condenser Pump Rated Power Consumption
+  N17, \field High Speed Evaporative Condenser Pump Rated Power Consumption
        \type real
        \units W
        \minimum 0.0
        \autosizable
        \note Rated power consumed by the evaporative condenser's water pump at high speed
-  N14, \field Low Speed Evaporative Condenser Effectiveness
+  N18, \field Low Speed Evaporative Condenser Effectiveness
        \type real
        \units dimensionless
        \minimum 0.0
        \maximum 1.0
        \default 0.9
-  N15, \field Low Speed Evaporative Condenser Air Flow Rate
+  N19, \field Low Speed Evaporative Condenser Air Flow Rate
        \type real
        \units m3/s
        \minimum> 0.0
        \autosizable
        \note Used to calculate evaporative condenser water use
-  N16, \field Low Speed Evaporative Condenser Pump Rated Power Consumption
+  N20, \field Low Speed Evaporative Condenser Pump Rated Power Consumption
        \type real
        \units W
        \minimum 0.0
@@ -52187,7 +52239,7 @@ Coil:Cooling:DX:TwoSpeed,
   A15, \field Condensate Collection Water Storage Tank Name
        \type object-list
        \object-list WaterStorageTankNames
-  N17, \field Basin Heater Capacity
+  N21, \field Basin Heater Capacity
        \type real
        \units W/K
        \minimum 0.0
@@ -52197,7 +52249,7 @@ Coil:Cooling:DX:TwoSpeed,
        \note For this situation, the heater maintains the basin water temperature at the basin heater
        \note setpoint temperature when the outdoor air temperature falls below the setpoint temperature.
        \note The basin heater only operates when the DX coil is off.
-  N18, \field Basin Heater Setpoint Temperature
+  N22, \field Basin Heater Setpoint Temperature
        \type real
        \units C
        \minimum 2.0
@@ -53141,12 +53193,36 @@ Coil:Cooling:DX:VariableSpeed,
         \type real
         \minimum 0
         \required-field
-   N17, \field Speed 1 Reference Unit Rated Condenser Air Flow Rate
+   N17, \field 2017 Speed 1 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N18, \field 2023 Speed 1 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N19, \field Speed 1 Reference Unit Rated Condenser Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
         \note This field is only used for Condenser Type = EvaporativelyCooled
-   N18, \field Speed 1 Reference Unit Rated Pad Effectiveness of Evap Precooling
+   N20, \field Speed 1 Reference Unit Rated Pad Effectiveness of Evap Precooling
         \units dimensionless
         \type real
         \minimum 0
@@ -53180,29 +53256,53 @@ Coil:Cooling:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N19, \field Speed 2 Reference Unit Gross Rated Total Cooling Capacity
+   N21, \field Speed 2 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N20, \field Speed 2 Reference Unit Gross Rated Sensible Heat Ratio
+   N22, \field Speed 2 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N21, \field Speed 2 Reference Unit Gross Rated Cooling COP
+   N23, \field Speed 2 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N22, \field Speed 2 Reference Unit Rated Air Flow Rate
+   N24, \field Speed 2 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N23, \field Speed 2 Reference Unit Rated Condenser Air Flow Rate
+   N25, \field 2017 Speed 2 Rated Evaporator Fan Power Per Volume Flow Rate
+       \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N26, \field 2023 Speed 2 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N27, \field Speed 2 Reference Unit Rated Condenser Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N24, \field Speed 2 Reference Unit Rated Pad Effectiveness of Evap Precooling
+   N28, \field Speed 2 Reference Unit Rated Pad Effectiveness of Evap Precooling
         \units dimensionless
         \type real
         \minimum 0
@@ -53231,29 +53331,53 @@ Coil:Cooling:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N25, \field Speed 3 Reference Unit Gross Rated Total Cooling Capacity
+   N29, \field Speed 3 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N26, \field Speed 3 Reference Unit Gross Rated Sensible Heat Ratio
+   N30, \field Speed 3 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N27, \field Speed 3 Reference Unit Gross Rated Cooling COP
+   N31, \field Speed 3 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N28, \field Speed 3 Reference Unit Rated Air Flow Rate
+   N32, \field Speed 3 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N29, \field Speed 3 Reference Unit Rated Condenser Air Flow Rate
+   N33, \field 2017 Speed 3 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N34, \field 2023 Speed 3 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N35, \field Speed 3 Reference Unit Rated Condenser Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N30, \field Speed 3 Reference Unit Rated Pad Effectiveness of Evap Precooling
+   N36, \field Speed 3 Reference Unit Rated Pad Effectiveness of Evap Precooling
         \units dimensionless
         \type real
         \minimum 0
@@ -53282,29 +53406,53 @@ Coil:Cooling:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N31, \field Speed 4 Reference Unit Gross Rated Total Cooling Capacity
+   N37, \field Speed 4 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N32, \field Speed 4 Reference Unit Gross Rated Sensible Heat Ratio
+   N38, \field Speed 4 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N33, \field Speed 4 Reference Unit Gross Rated Cooling COP
+   N39, \field Speed 4 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N34, \field Speed 4 Reference Unit Rated Air Flow Rate
+   N40, \field Speed 4 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N35, \field Speed 4 Reference Unit Rated Condenser Air Flow Rate
+   N41, \field 2017 Speed 4 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N42, \field 2023 Speed 4 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N43, \field Speed 4 Reference Unit Rated Condenser Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N36, \field Speed 4 Reference Unit Rated Pad Effectiveness of Evap Precooling
+   N44, \field Speed 4 Reference Unit Rated Pad Effectiveness of Evap Precooling
         \units dimensionless
         \type real
         \minimum 0
@@ -53333,29 +53481,53 @@ Coil:Cooling:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N37, \field Speed 5 Reference Unit Gross Rated Total Cooling Capacity
+   N45, \field Speed 5 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N38, \field Speed 5 Reference Unit Gross Rated Sensible Heat Ratio
+   N46, \field Speed 5 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N39, \field Speed 5 Reference Unit Gross Rated Cooling COP
+   N47, \field Speed 5 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N40, \field Speed 5 Reference Unit Rated Air Flow Rate
+   N48, \field Speed 5 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N41, \field Speed 5 Reference Unit Rated Condenser Air Flow Rate
+   N49, \field 2017 Speed 5 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N50, \field 2023 Speed 5 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N51, \field Speed 5 Reference Unit Rated Condenser Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N42, \field Speed 5 Reference Unit Rated Pad Effectiveness of Evap Precooling
+   N52, \field Speed 5 Reference Unit Rated Pad Effectiveness of Evap Precooling
         \units dimensionless
         \type real
         \minimum 0
@@ -53384,29 +53556,53 @@ Coil:Cooling:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N43, \field Speed 6 Reference Unit Gross Rated Total Cooling Capacity
+   N53, \field Speed 6 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N44, \field Speed 6 Reference Unit Gross Rated Sensible Heat Ratio
+   N54, \field Speed 6 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N45, \field Speed 6 Reference Unit Gross Rated Cooling COP
+   N55, \field Speed 6 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N46, \field Speed 6 Reference Unit Rated Air Flow Rate
+   N56, \field Speed 6 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N47, \field Speed 6 Reference Unit Condenser Air Flow Rate
+   N57, \field 2017 Speed 6 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N58, \field 2023 Speed 6 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N59, \field Speed 6 Reference Unit Condenser Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N48, \field Speed 6 Reference Unit Rated Pad Effectiveness of Evap Precooling
+   N60, \field Speed 6 Reference Unit Rated Pad Effectiveness of Evap Precooling
         \units dimensionless
         \type real
         \minimum 0
@@ -53435,29 +53631,53 @@ Coil:Cooling:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N49, \field Speed 7 Reference Unit Gross Rated Total Cooling Capacity
+   N61, \field Speed 7 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N50, \field Speed 7 Reference Unit Gross Rated Sensible Heat Ratio
+   N62, \field Speed 7 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N51, \field Speed 7 Reference Unit Gross Rated Cooling COP
+   N63, \field Speed 7 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N52, \field Speed 7 Reference Unit Rated Air Flow Rate
+   N64, \field Speed 7 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N53, \field Speed 7 Reference Unit Condenser Flow Rate
+   N65, \field 2017 Speed 7 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N66, \field 2023 Speed 7 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N67, \field Speed 7 Reference Unit Condenser Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N54, \field Speed 7 Reference Unit Rated Pad Effectiveness of Evap Precooling
+   N68, \field Speed 7 Reference Unit Rated Pad Effectiveness of Evap Precooling
         \units dimensionless
         \type real
         \minimum 0
@@ -53486,29 +53706,53 @@ Coil:Cooling:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N55, \field Speed 8 Reference Unit Gross Rated Total Cooling Capacity
+   N69, \field Speed 8 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N56, \field Speed 8 Reference Unit Gross Rated Sensible Heat Ratio
+   N70, \field Speed 8 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N57, \field Speed 8 Reference Unit Gross Rated Cooling COP
+   N71, \field Speed 8 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N58, \field Speed 8 Reference Unit Rated Air Flow Rate
+   N72, \field Speed 8 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N59, \field Speed 8 Reference Unit Condenser Air Flow Rate
+   N73, \field 2017 Speed 8 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N74, \field 2023 Speed 8 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N75, \field Speed 8 Reference Unit Condenser Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N60, \field Speed 8 Reference Unit Rated Pad Effectiveness of Evap Precooling
+   N76, \field Speed 8 Reference Unit Rated Pad Effectiveness of Evap Precooling
         \units dimensionless
         \type real
         \minimum 0
@@ -53537,30 +53781,54 @@ Coil:Cooling:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N61, \field Speed 9 Reference Unit Gross Rated Total Cooling Capacity
+   N77, \field Speed 9 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N62, \field Speed 9 Reference Unit Gross Rated Sensible Heat Ratio
+   N78, \field Speed 9 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N63, \field Speed 9 Reference Unit Gross Rated Cooling COP
+   N79, \field Speed 9 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N64, \field Speed 9 Reference Unit Rated Air Flow Rate
+   N80, \field Speed 9 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N65, \field Speed 9 Reference Unit Condenser Air Flow Rate
+   N81, \field 2017 Speed 9 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N82, \field 2023 Speed 9 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N83, \field Speed 9 Reference Unit Condenser Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
         \note optional
-   N66, \field Speed 9 Reference Unit Rated Pad Effectiveness of Evap Precooling
+   N84, \field Speed 9 Reference Unit Rated Pad Effectiveness of Evap Precooling
         \units dimensionless
         \type real
         \minimum 0
@@ -53590,30 +53858,54 @@ Coil:Cooling:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N67, \field Speed 10 Reference Unit Gross Rated Total Cooling Capacity
+   N85, \field Speed 10 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N68, \field Speed 10 Reference Unit Gross Rated Sensible Heat Ratio
+   N86, \field Speed 10 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N69, \field Speed 10 Reference Unit Gross Rated Cooling COP
+   N87, \field Speed 10 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N70, \field Speed 10 Reference Unit Rated Air Flow Rate
+   N88, \field Speed 10 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N71, \field Speed 10 Reference Unit Condenser Air Flow Rate
+   N89, \field 2017 Speed 10 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N90, \field 2023 Speed 10 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N91, \field Speed 10 Reference Unit Condenser Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
         \note optional
-   N72, \field Speed 10 Reference Unit Rated Pad Effectiveness of Evap Precooling
+   N92, \field Speed 10 Reference Unit Rated Pad Effectiveness of Evap Precooling
         \units dimensionless
         \type real
         \minimum 0
@@ -55702,6 +55994,28 @@ Coil:Heating:DX:VariableSpeed,
         \type real
         \minimum 0
         \required-field
+   N15, \field 2017 Speed 1 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N16, \field 2023 Speed 1 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
    A8,  \field Speed 1 Heating Capacity Function of Temperature Curve Name
         \required-field
         \type object-list
@@ -55730,19 +56044,41 @@ Coil:Heating:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N15, \field Speed 2 Reference Unit Gross Rated Heating Capacity
+   N17, \field Speed 2 Reference Unit Gross Rated Heating Capacity
         \note Heating capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N16, \field Speed 2 Reference Unit Gross Rated Heating COP
+   N18, \field Speed 2 Reference Unit Gross Rated Heating COP
         \type real
         \units W/W
         \minimum> 0.0
-   N17, \field Speed 2 Reference Unit Rated Air Flow Rate
+   N19, \field Speed 2 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
+   N20, \field 2017 Speed 2 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N21, \field 2023 Speed 2 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
    A12, \field Speed 2 Heating Capacity Function of Temperature Curve Name
         \type object-list
         \object-list BivariateFunctions
@@ -55767,19 +56103,41 @@ Coil:Heating:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N18, \field Speed 3 Reference Unit Gross Rated Heating Capacity
+   N22, \field Speed 3 Reference Unit Gross Rated Heating Capacity
         \note Heating capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N19, \field Speed 3 Reference Unit Gross Rated Heating COP
+   N23, \field Speed 3 Reference Unit Gross Rated Heating COP
         \type real
         \units W/W
         \minimum> 0.0
-   N20, \field Speed 3 Reference Unit Rated Air Flow Rate
+   N24, \field Speed 3 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
+   N25, \field 2017 Speed 3 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N26, \field 2023 Speed 3 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
    A16, \field Speed 3 Heating Capacity Function of Temperature Curve Name
         \type object-list
         \object-list UnivariateFunctions
@@ -55805,19 +56163,41 @@ Coil:Heating:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N21, \field Speed 4 Reference Unit Gross Rated Heating Capacity
+   N27, \field Speed 4 Reference Unit Gross Rated Heating Capacity
         \note Heating capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N22, \field Speed 4 Reference Unit Gross Rated Heating COP
+   N28, \field Speed 4 Reference Unit Gross Rated Heating COP
         \type real
         \units W/W
         \minimum> 0.0
-   N23, \field Speed 4 Reference Unit Rated Air Flow Rate
+   N29, \field Speed 4 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
+   N30, \field 2017 Speed 4 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N31, \field 2023 Speed 4 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
    A20, \field Speed 4 Heating Capacity Function of Temperature Curve Name
         \type object-list
         \object-list BivariateFunctions
@@ -55842,19 +56222,41 @@ Coil:Heating:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N24, \field Speed 5 Reference Unit Gross Rated Heating Capacity
+   N32, \field Speed 5 Reference Unit Gross Rated Heating Capacity
         \note Heating capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N25, \field Speed 5 Reference Unit Gross Rated Heating COP
+   N33, \field Speed 5 Reference Unit Gross Rated Heating COP
         \type real
         \units W/W
         \minimum> 0.0
-   N26, \field Speed 5 Reference Unit Rated Air Flow Rate
+   N34, \field Speed 5 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
+   N35, \field 2017 Speed 5 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N36, \field 2023 Speed 5 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
    A24, \field Speed 5 Heating Capacity Function of Temperature Curve Name
         \type object-list
         \object-list BivariateFunctions
@@ -55879,19 +56281,41 @@ Coil:Heating:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N27, \field Speed 6 Reference Unit Gross Rated Heating Capacity
+   N37, \field Speed 6 Reference Unit Gross Rated Heating Capacity
         \note Heating capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N28, \field Speed 6 Reference Unit Gross Rated Heating COP
+   N38, \field Speed 6 Reference Unit Gross Rated Heating COP
         \type real
         \units W/W
         \minimum> 0.0
-   N29, \field Speed 6 Reference Unit Rated Air Flow Rate
+   N39, \field Speed 6 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
+   N40, \field 2017 Speed 6 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N41, \field 2023 Speed 6 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
    A28, \field Speed 6 Heating Capacity Function of Temperature Curve Name
         \type object-list
         \object-list BivariateFunctions
@@ -55916,19 +56340,41 @@ Coil:Heating:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N30, \field Speed 7 Reference Unit Gross Rated Heating Capacity
+   N42, \field Speed 7 Reference Unit Gross Rated Heating Capacity
         \note Heating capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N31, \field Speed 7 Reference Unit Gross Rated Heating COP
+   N43, \field Speed 7 Reference Unit Gross Rated Heating COP
         \type real
         \units W/W
         \minimum> 0.0
-   N32, \field Speed 7 Reference Unit Rated Air Flow Rate
+   N44, \field Speed 7 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
+   N45, \field 2017 Speed 7 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N46, \field 2023 Speed 7 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
    A32, \field Speed 7 Heating Capacity Function of Temperature Curve Name
         \type object-list
         \object-list BivariateFunctions
@@ -55953,19 +56399,41 @@ Coil:Heating:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N33, \field Speed 8 Reference Unit Gross Rated Heating Capacity
+   N47, \field Speed 8 Reference Unit Gross Rated Heating Capacity
         \note Heating capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N34, \field Speed 8 Reference Unit Gross Rated Heating COP
+   N48, \field Speed 8 Reference Unit Gross Rated Heating COP
         \type real
         \units W/W
         \minimum> 0.0
-   N35, \field Speed 8 Reference Unit Rated Air Flow Rate
+   N49, \field Speed 8 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
+   N50, \field 2017 Speed 8 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N51, \field 2023 Speed 8 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
    A36, \field Speed 8 Heating Capacity Function of Temperature Curve Name
         \type object-list
         \object-list BivariateFunctions
@@ -55990,19 +56458,41 @@ Coil:Heating:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N36, \field Speed 9 Reference Unit Gross Rated Heating Capacity
+   N52, \field Speed 9 Reference Unit Gross Rated Heating Capacity
         \note Heating capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N37, \field Speed 9 Reference Unit Gross Rated Heating COP
+   N53, \field Speed 9 Reference Unit Gross Rated Heating COP
         \type real
         \units W/W
         \minimum> 0.0
-   N38, \field Speed 9 Reference Unit Rated Air Flow Rate
+   N54, \field Speed 9 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
+   N55, \field 2017 Speed 9 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N56, \field 2023 Speed 9 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
    A40, \field Speed 9 Heating Capacity Function of Temperature Curve Name
         \type object-list
         \object-list BivariateFunctions
@@ -56027,19 +56517,41 @@ Coil:Heating:DX:VariableSpeed,
         \note quadratic curve = a + b*ffa + c*ffa**2
         \note cubic curve = a + b*ffa + c*ffa**2 + d*ffa**3
         \note ffa = Fraction of the full load Air Flow
-   N39, \field Speed 10 Reference Unit Gross Rated Heating Capacity
+   N57, \field Speed 10 Reference Unit Gross Rated Heating Capacity
         \note Heating capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N40, \field Speed 10 Reference Unit Gross Rated Heating COP
+   N58, \field Speed 10 Reference Unit Gross Rated Heating COP
         \type real
         \units W/W
         \minimum> 0.0
-   N41, \field Speed 10 Reference Unit Rated Air Flow Rate
+   N59, \field Speed 10 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
+   N60, \field 2017 Speed 10 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N61, \field 2023 Speed 10 Rated Supply Air Fan Power Per Volume Flow Rate
+        \note Enter the supply air fan power per air volume flow rate at the rated speed 1 test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on heating capacity. This value
+        \note is only used to calculate Heating Seasonal Performance Factor(HSPF). This value is not
+        \note used for modeling the supply air fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
    A44, \field Speed 10 Heating Capacity Function of Temperature Curve Name
         \type object-list
         \object-list BivariateFunctions
@@ -56415,33 +56927,59 @@ Coil:Cooling:WaterToAirHeatPump:EquationFit,
         \minimum> 0.0
         \units m3/s
         \autosizable
-   N2,  \field Rated Water Flow Rate
+   N2 , \field 2017 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240. 
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), Energy
+        \note Efficiency Ratio (EER), Integrated Energy Efficiency Ratio (IEER), and the Standard Rating
+        \note (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file. This value is not
+        \note used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N3 , \field 2023 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), Energy
+        \note Efficiency Ratio (EER), Integrated Energy Efficiency Ratio (IEER), and the Standard Rating
+        \note (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file. This value is not
+        \note used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N4,  \field Rated Water Flow Rate
         \required-field
         \type real
         \minimum> 0.0
         \units m3/s
         \ip-units gal/min
         \autosizable
-   N3,  \field Gross Rated Total Cooling Capacity
+   N5,  \field Gross Rated Total Cooling Capacity
         \note Total cooling capacity at rated conditions not accounting for the effect of supply air fan heat
         \required-field
         \type real
         \minimum> 0.0
         \units W
         \autosizable
-   N4,  \field Gross Rated Sensible Cooling Capacity
+   N6,  \field Gross Rated Sensible Cooling Capacity
         \required-field
         \type real
         \minimum> 0.0
         \units W
         \autosizable
-   N5,  \field Gross Rated Cooling COP
+   N7,  \field Gross Rated Cooling COP
         \note Gross cooling COP at rated conditions
         \required-field
         \type real
         \units W/W
         \minimum> 0.0
-   N6,  \field Rated Entering Water Temperature
+   N8,  \field Rated Entering Water Temperature
         \note Rated entering water temperature corresponding to the water-to
         \note -air application for which this coil is used. For example: for water loop
         \note applications, the rated temperature is 30 degree Celsius
@@ -56449,7 +56987,7 @@ Coil:Cooling:WaterToAirHeatPump:EquationFit,
         \type real
         \minimum> 0
         \default 30
-   N7,  \field Rated Entering Air Dry-Bulb Temperature
+   N9,  \field Rated Entering Air Dry-Bulb Temperature
         \note Rated entering air dry-bulb temperature corresponding to the
         \note water-to-air application for which this coil is used. For example: for
         \note water loop applications, the rated temperature is 27 degree Celsius
@@ -56457,7 +56995,7 @@ Coil:Cooling:WaterToAirHeatPump:EquationFit,
         \type real
         \default 27
         \minimum> 0
-   N8,  \field Rated Entering Air Wet-Bulb Temperature
+   N10, \field Rated Entering Air Wet-Bulb Temperature
         \note Rated entering air wet-bulb temperature corresponding to the
         \note water-to-air application for which this coil is used. For example: for
         \note water loop applications, the rated temperature is 19 degree Celsius
@@ -56469,15 +57007,15 @@ Coil:Cooling:WaterToAirHeatPump:EquationFit,
         \required-field
         \type object-list
         \object-list QuadvariateFunctions
-   A7, \field Sensible Cooling Capacity Curve Name
+   A7,  \field Sensible Cooling Capacity Curve Name
         \required-field
         \type object-list
         \object-list QuintvariateFunctions
-   A8, \field Cooling Power Consumption Curve Name
+   A8,  \field Cooling Power Consumption Curve Name
         \required-field
         \type object-list
         \object-list QuadvariateFunctions
-   N9, \field Nominal Time for Condensate Removal to Begin
+   N11, \field Nominal Time for Condensate Removal to Begin
         \type real
         \units s
         \minimum 0.0
@@ -56488,7 +57026,7 @@ Coil:Cooling:WaterToAirHeatPump:EquationFit,
         \note Nominal time is equal to the ratio of the energy of the coil's maximum
         \note condensate holding capacity (J) to the coil's steady state latent capacity (W).
         \note Suggested value is 1000; zero value means latent degradation model is disabled.
-   N10; \field Ratio of Initial Moisture Evaporation Rate and Steady State Latent Capacity
+   N12; \field Ratio of Initial Moisture Evaporation Rate and Steady State Latent Capacity
         \type real
         \units dimensionless
         \minimum 0.0
@@ -56598,7 +57136,31 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \type real
         \minimum 0
         \required-field
-   N13, \field Speed 1 Reference Unit Rated Water Flow Rate
+   N13, \field 2017 Speed 1 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N14, \field 2023 Speed 1 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N15, \field Speed 1 Reference Unit Rated Water Flow Rate
         \units m3/s
         \ip-units gal/min
         \type real
@@ -56611,7 +57173,7 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note curve = a + b*wb + c*wb**2 + d*ewt + e*ewt**2 + f*wb*ewt
         \note wb = entering wet-bulb temperature (C)
         \note ewt = water entering temperature seen by the condenser (C)
-   A8,   \field Speed 1 Total Cooling Capacity Function of Air Flow Fraction Curve Name
+   A8,  \field Speed 1 Total Cooling Capacity Function of Air Flow Fraction Curve Name
         \required-field
         \type object-list
         \object-list UnivariateFunctions
@@ -56646,7 +57208,7 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note quadratic curve = a + b*ffw + c*ffw**2
         \note cubic curve = a + b*ffw + c*ffw**2 + d*ffw**3
         \note ffw = Fraction of the full load Water Flow
-   N14, \field Speed 1 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
+   N16, \field Speed 1 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
         \units dimensionless
         \type real
         \minimum 0
@@ -56658,25 +57220,49 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note curve = a + b*wb + c*wb**2 + d*ewt + e*ewt**2 + f*wb*ewt
         \note wb = entering wet-bulb temperature (C)
         \note ewt = water entering temperature seen by the condenser (C)
-   N15, \field Speed 2 Reference Unit Gross Rated Total Cooling Capacity
+   N17, \field Speed 2 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N16, \field Speed 2 Reference Unit Gross Rated Sensible Heat Ratio
+   N18, \field Speed 2 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N17, \field Speed 2 Reference Unit Gross Rated Cooling COP
+   N19, \field Speed 2 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N18, \field Speed 2 Reference Unit Rated Air Flow Rate
+   N20, \field Speed 2 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N19, \field Speed 2 Reference Unit Rated Water Flow Rate
+   N21, \field 2017 Speed 2 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N22, \field 2023 Speed 2 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N23, \field Speed 2 Reference Unit Rated Water Flow Rate
         \units m3/s
         \ip-units gal/min
         \type real
@@ -56717,7 +57303,7 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note quadratic curve = a + b*ffw + c*ffw**2
         \note cubic curve = a + b*ffw + c*ffw**2 + d*ffw**3
         \note ffw = Fraction of the full load Water Flow
-   N20, \field Speed 2 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
+   N24, \field Speed 2 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
         \units dimensionless
         \type real
         \minimum 0
@@ -56727,25 +57313,49 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note curve = a + b*wb + c*wb**2 + d*ewt + e*ewt**2 + f*wb*ewt
         \note wb = entering wet-bulb temperature (C)
         \note ewt = water entering temperature seen by the condenser (C)
-   N21, \field Speed 3 Reference Unit Gross Rated Total Cooling Capacity
+   N25, \field Speed 3 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N22, \field Speed 3 Reference Unit Gross Rated Sensible Heat Ratio
+   N26, \field Speed 3 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N23, \field Speed 3 Reference Unit Gross Rated Cooling COP
+   N27, \field Speed 3 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N24, \field Speed 3 Reference Unit Rated Air Flow Rate
+   N28, \field Speed 3 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N25, \field Speed 3 Reference Unit Rated Water Flow Rate
+   N29, \field 2017 Speed 3 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N30, \field 2023 Speed 3 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N31, \field Speed 3 Reference Unit Rated Water Flow Rate
         \units m3/s
         \ip-units gal/min
         \type real
@@ -56792,7 +57402,7 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note quadratic curve = a + b*ffw + c*ffw**2
         \note cubic curve = a + b*ffw + c*ffw**2 + d*ffw**3
         \note ffw = Fraction of the full load Water Flow
-   N26, \field Speed 3 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
+   N32, \field Speed 3 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
         \units dimensionless
         \type real
         \minimum 0
@@ -56803,25 +57413,49 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note curve = a + b*wb + c*wb**2 + d*ewt + e*ewt**2 + f*wb*ewt
         \note wb = entering wet-bulb temperature (C)
         \note ewt = water entering temperature seen by the condenser (C)
-   N27, \field Speed 4 Reference Unit Gross Rated Total Cooling Capacity
+   N33, \field Speed 4 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N28, \field Speed 4 Reference Unit Gross Rated Sensible Heat Ratio
+   N34, \field Speed 4 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N29, \field Speed 4 Reference Unit Gross Rated Cooling COP
+   N35, \field Speed 4 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N30, \field Speed 4 Reference Unit Rated Air Flow Rate
+   N36, \field Speed 4 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N31, \field Speed 4 Reference Unit Rated Water Flow Rate
+   N37, \field 2017 Speed 4 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N38, \field 2023 Speed 4 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N39, \field Speed 4 Reference Unit Rated Water Flow Rate
         \units m3/s
         \ip-units gal/min
         \type real
@@ -56868,7 +57502,7 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note quadratic curve = a + b*ffw + c*ffw**2
         \note cubic curve = a + b*ffw + c*ffw**2 + d*ffw**3
         \note ffw = Fraction of the full load Water Flow
-   N32, \field Speed 4 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
+   N40, \field Speed 4 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
         \units dimensionless
         \type real
         \minimum 0
@@ -56879,25 +57513,49 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note curve = a + b*wb + c*wb**2 + d*ewt + e*ewt**2 + f*wb*ewt
         \note wb = entering wet-bulb temperature (C)
         \note ewt = water entering temperature seen by the condenser (C)
-   N33, \field Speed 5 Reference Unit Gross Rated Total Cooling Capacity
+   N41, \field Speed 5 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N34, \field Speed 5 Reference Unit Gross Rated Sensible Heat Ratio
+   N42, \field Speed 5 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N35, \field Speed 5 Reference Unit Gross Rated Cooling COP
+   N43, \field Speed 5 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N36, \field Speed 5 Reference Unit Rated Air Flow Rate
+   N44, \field Speed 5 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N37, \field Speed 5 Reference Unit Rated Water Flow Rate
+   N45, \field 2017 Speed 5 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N46, \field 2023 Speed 5 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N47, \field Speed 5 Reference Unit Rated Water Flow Rate
         \units m3/s
         \ip-units gal/min
         \type real
@@ -56944,7 +57602,7 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note quadratic curve = a + b*ffw + c*ffw**2
         \note cubic curve = a + b*ffw + c*ffw**2 + d*ffw**3
         \note ffw = Fraction of the full load Water Flow
-   N38, \field Speed 5 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
+   N48, \field Speed 5 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
         \units dimensionless
         \type real
         \minimum 0
@@ -56955,25 +57613,49 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note curve = a + b*wb + c*wb**2 + d*ewt + e*ewt**2 + f*wb*ewt
         \note wb = entering wet-bulb temperature (C)
         \note ewt = water entering temperature seen by the condenser (C)
-   N39, \field Speed 6 Reference Unit Gross Rated Total Cooling Capacity
+   N49, \field Speed 6 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N40, \field Speed 6 Reference Unit Gross Rated Sensible Heat Ratio
+   N50, \field Speed 6 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N41, \field Speed 6 Reference Unit Gross Rated Cooling COP
+   N51, \field Speed 6 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N42, \field Speed 6 Reference Unit Rated Air Flow Rate
+   N52, \field Speed 6 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N43, \field Speed 6 Reference Unit Rated Water Flow Rate
+   N53, \field 2017 Speed 6 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N54, \field 2023 Speed 6 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N55, \field Speed 6 Reference Unit Rated Water Flow Rate
         \units m3/s
         \ip-units gal/min
         \type real
@@ -57020,7 +57702,7 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note quadratic curve = a + b*ffw + c*ffw**2
         \note cubic curve = a + b*ffw + c*ffw**2 + d*ffw**3
         \note ffw = Fraction of the full load Water Flow
-   N44, \field Speed 6 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
+   N56, \field Speed 6 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
         \units dimensionless
         \type real
         \minimum 0
@@ -57031,25 +57713,49 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note curve = a + b*wb + c*wb**2 + d*ewt + e*ewt**2 + f*wb*ewt
         \note wb = entering wet-bulb temperature (C)
         \note ewt = water entering temperature seen by the condenser (C)
-   N45, \field Speed 7 Reference Unit Gross Rated Total Cooling Capacity
+   N57, \field Speed 7 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N46, \field Speed 7 Reference Unit Gross Rated Sensible Heat Ratio
+   N58, \field Speed 7 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N47, \field Speed 7 Reference Unit Gross Rated Cooling COP
+   N59, \field Speed 7 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N48, \field Speed 7 Reference Unit Rated Air Flow Rate
+   N60, \field Speed 7 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N49, \field Speed 7 Reference Unit Rated Water Flow Rate
+   N61, \field 2017 Speed 7 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N62, \field 2023 Speed 7 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N63, \field Speed 7 Reference Unit Rated Water Flow Rate
         \units m3/s
         \ip-units gal/min
         \type real
@@ -57096,7 +57802,7 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note quadratic curve = a + b*ffw + c*ffw**2
         \note cubic curve = a + b*ffw + c*ffw**2 + d*ffw**3
         \note ffw = Fraction of the full load Water Flow
-   N50, \field Speed 7 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
+   N64, \field Speed 7 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
         \units dimensionless
         \type real
         \minimum 0
@@ -57107,25 +57813,49 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note curve = a + b*wb + c*wb**2 + d*ewt + e*ewt**2 + f*wb*ewt
         \note wb = entering wet-bulb temperature (C)
         \note ewt = water entering temperature seen by the condenser (C)
-   N51, \field Speed 8 Reference Unit Gross Rated Total Cooling Capacity
+   N65, \field Speed 8 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N52, \field Speed 8 Reference Unit Gross Rated Sensible Heat Ratio
+   N66, \field Speed 8 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N53, \field Speed 8 Reference Unit Gross Rated Cooling COP
+   N67, \field Speed 8 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N54, \field Speed 8 Reference Unit Rated Air Flow Rate
+   N68, \field Speed 8 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N55, \field Speed 8 Reference Unit Rated Water Flow Rate
+   N69, \field 2017 Speed 8 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N70, \field 2023 Speed 8 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N71, \field Speed 8 Reference Unit Rated Water Flow Rate
         \units m3/s
         \ip-units gal/min
         \type real
@@ -57172,7 +57902,7 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note quadratic curve = a + b*ffw + c*ffw**2
         \note cubic curve = a + b*ffw + c*ffw**2 + d*ffw**3
         \note ffw = Fraction of the full load Water Flow
-   N56, \field Speed 8 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
+   N72, \field Speed 8 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
         \units dimensionless
         \type real
         \minimum 0
@@ -57183,25 +57913,49 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note curve = a + b*wb + c*wb**2 + d*ewt + e*ewt**2 + f*wb*ewt
         \note wb = entering wet-bulb temperature (C)
         \note ewt = water entering temperature seen by the condenser (C)
-   N57, \field Speed 9 Reference Unit Gross Rated Total Cooling Capacity
+   N73, \field Speed 9 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N58, \field Speed 9 Reference Unit Gross Rated Sensible Heat Ratio
+   N74, \field Speed 9 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N59, \field Speed 9 Reference Unit Gross Rated Cooling COP
+   N75, \field Speed 9 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N60, \field Speed 9 Reference Unit Rated Air Flow Rate
+   N76, \field Speed 9 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N61, \field Speed 9 Reference Unit Rated Water Flow Rate
+   N77, \field 2017 Speed 9 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N78, \field 2023 Speed 9 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N79, \field Speed 9 Reference Unit Rated Water Flow Rate
         \units m3/s
         \ip-units gal/min
         \type real
@@ -57248,7 +58002,7 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note quadratic curve = a + b*ffw + c*ffw**2
         \note cubic curve = a + b*ffw + c*ffw**2 + d*ffw**3
         \note ffw = Fraction of the full load Water Flow
-   N62, \field Speed 9 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
+   N80, \field Speed 9 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
         \units dimensionless
         \type real
         \minimum 0
@@ -57259,25 +58013,49 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note curve = a + b*wb + c*wb**2 + d*ewt + e*ewt**2 + f*wb*ewt
         \note wb = entering wet-bulb temperature (C)
         \note ewt = water entering temperature seen by the condenser (C)
-   N63, \field Speed 10 Reference Unit Gross Rated Total Cooling Capacity
+   N81, \field Speed 10 Reference Unit Gross Rated Total Cooling Capacity
         \note Total cooling capacity not accounting for the effect of supply air fan heat
         \units W
         \type real
         \minimum 0
-   N64, \field Speed 10 Reference Unit Gross Rated Sensible Heat Ratio
+   N82, \field Speed 10 Reference Unit Gross Rated Sensible Heat Ratio
         \units dimensionless
         \type real
         \minimum 0
         \maximum 1.0
-   N65, \field Speed 10 Reference Unit Gross Rated Cooling COP
+   N83, \field Speed 10 Reference Unit Gross Rated Cooling COP
         \type real
         \units W/W
         \minimum> 0.0
-   N66, \field Speed 10 Reference Unit Rated Air Flow Rate
+   N84, \field Speed 10 Reference Unit Rated Air Flow Rate
         \units m3/s
         \type real
         \minimum 0
-   N67, \field Speed 10 Reference Unit Rated Water Flow Rate
+   N85, \field 2017 Speed 10 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2017 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1250.0
+        \default 773.3
+   N86, \field 2023 Speed 10 Rated Evaporator Fan Power Per Volume Flow Rate
+        \note Enter the evaporator fan power per air volume flow rate at the rated test conditions
+        \note as defined in the 2023 version of ANSI/AHRI Standard 210/240.
+        \note The test conditions vary external static pressure based on total cooling capacity.
+        \note This value is only used to calculate Seasonal Energy Efficiency Ratio (SEER2), and the
+        \note Standard Rating (Net) Cooling Capacity which will be outputs in the EnergyPlus eio file.
+        \note This value is not used for modeling the evaporator fan during simulations.
+        \type real
+        \units W/(m3/s)
+        \minimum 0.0
+        \maximum 1505.0
+        \default 934.4
+   N87, \field Speed 10 Reference Unit Rated Water Flow Rate
         \units m3/s
         \ip-units gal/min
         \type real
@@ -57324,7 +58102,7 @@ Coil:Cooling:WaterToAirHeatPump:VariableSpeedEquationFit,
         \note quadratic curve = a + b*ffw + c*ffw**2
         \note cubic curve = a + b*ffw + c*ffw**2 + d*ffw**3
         \note ffw = Fraction of the full load Water Flow
-   N68, \field Speed 10 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
+   N88, \field Speed 10 Reference Unit Waste Heat Fraction of Input Power At Rated Conditions
         \units dimensionless
         \type real
         \minimum 0
